@@ -8,6 +8,8 @@ public class Kurs {
     private int kursId;
     private String kursName;
 
+
+
     public int getKursId() {
         return kursId;
     }
@@ -22,5 +24,13 @@ public class Kurs {
 
     public void setKursName(String kursName) {
         this.kursName = kursName;
+    }
+
+    @Override
+    public String toString() {
+        return "Kurs{" +
+                "kursId=" + kursId +
+                ", kursName='" + kursName + '\'' +
+                '}';
     }
 }

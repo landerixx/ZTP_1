@@ -6,9 +6,16 @@ import com.Model.Entity.Student;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import com.Model.DAO.*;
 
 /**
  * Hello world!
+ *
+ *
+ * ZAPISANY -> 2 klucze glowne typu int? czy Student/Kurs
+ *
+ *
+ *
  *
  */
 public class App 
@@ -17,59 +24,35 @@ public class App
     {
         System.out.println( "Hello World!" );
 
-        DataSource dataSource = new DataSource();
-        Connection con = dataSource.createConnection();
-        Statement stmt = null;
-        ResultSet rs = null;
-        List<Student> employeeList = new ArrayList<Student>();
+        StudentDaoImpl stdao= new StudentDaoImpl();
+
+        Student stud = new Student();
+        stud.setStudentId(3);
+        stud.setStudentName("Nowak");
+
+        //stdao.addStudent(stud);
 
 
-        try
-        {
-            String query = "SELECT * FROM student";
-            stmt = con.createStatement();
-            rs = stmt.executeQuery(query);
-            while( rs.next() )
-            {
-                Student employee = new Student();
-                employee.setStudentId(rs.getInt("studentid"));
-                employee.setStudentName(rs.getString("studentname"));
-                employeeList.add(employee);
-            }
-        }
-        catch( SQLException e )
-        {
-            e.printStackTrace();
-        }
-
-        finally
-        {
-            try
-            {
-                if( con != null )
-                {
-                    con.close();
-                }
-                if( stmt != null )
-                {
-                    stmt.close();
-                }
-                if( rs != null )
-                {
-                    rs.close();
-                }
-            }
-            catch( Exception exe )
-            {
-                exe.printStackTrace();
-            }
-
-        }
-        for(Student st: employeeList ){
+        List<Student> stList= stdao.getAllStudents();
+        for(Student st: stList)
             System.out.println(st);
-        }
+
+        Student zBazy = stdao.getStudent(3);
+        System.out.println(zBazy);
+
+        zBazy.setStudentName("POPRAWIONE");
+        stdao.updateStudent(zBazy);
+
+        Student zBazy2= stdao.getStudent(3);
+        System.out.println(zBazy2);
+
+        System.out.println("USUWAMY");
+       // stdao.deleteStudent(1);
 
 
+        List<Student> stList2= stdao.getAllStudents();
+        for(Student st: stList2)
+            System.out.println(st);
 
 
 
