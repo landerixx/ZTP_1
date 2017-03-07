@@ -48,9 +48,13 @@ public class StudentServiceImpl implements StudentService {
     }
 
 
+    //MOZE NIE ISTNIEJ STUDENT W BAZIE
     public void update(Student entity) {
 
-        studentDao.updateStudent(entity);
+        if(getAllIndexes().contains(entity.getStudentId()))
+            studentDao.updateStudent(entity);
+        else
+            System.out.println("W BAZIE NIE ISTNIEJE STUDENT O TAKIM ID");
     }
 
     public void remove(Student entity) {

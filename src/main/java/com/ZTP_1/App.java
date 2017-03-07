@@ -5,6 +5,8 @@ import com.Model.DAO.*;
 import com.Model.Entity.Kurs;
 import com.Model.Entity.Student;
 import com.Model.Entity.Zapisany;
+import com.Service.StudentService;
+import com.Service.StudentServiceImpl;
 
 /*
 
@@ -21,6 +23,9 @@ A "service layer" exists between the UI and the backend
  *
  *ZAPISANY -> MOZNA DODAWAC KLUCZE, KTORE NIE ISTNIEJA W STUDENCI/KURS
  *
+ *
+ * UWAGA NA NULL POINTER EXCEPTION W SERVISACH PRZY ENCJACH JAKO PARAMETR
+ * UWAGA NA NULL POINTER EXCEPTION W DAO'S PRZY OBIEKTACH
  *
  */
 public class App 
@@ -113,6 +118,50 @@ public class App
         Zapisany zap2 = zapDao.getZapisany(2,3);
         System.out.println(zap2);
 */
+
+
+//SERVICY
+
+        //STUDENT
+        StudentDaoImpl stdao= new StudentDaoImpl();
+        StudentService stService = new StudentServiceImpl(stdao);
+
+        List<Student> listastud= stService.getAll();
+
+        for(Student st: listastud)
+            System.out.println(st);
+
+        Student s= stService.get(3);
+        Student s2 = stService.get(4); // nie ma studenta o podanym ID -> wychodzi NULL
+        System.out.println(s);
+
+        stService.add(s); // w bazie jest juz taki student
+        Student nowy = new Student(8, "Nowy");
+        //stService.add(nowy); // juz
+
+
+        nowy.setStudentName("NowyUpdate");
+        //stService.update(nowy); //zupdatowany
+
+        Student s3 = new Student (100,"Nie w Bazie");
+        stService.update(s3); // nie istnieje student w bazie o takim ID
+
+        List<Integer> indeksy = stService.getAllIndexes();
+        System.out.println(indeksy);
+
+
+        //stService.remove(nowy);
+          stService.remove(s3); // nie istnieje student w bazie o takim ID
+         listastud= stService.getAll();
+
+        for(Student st: listastud)
+            System.out.println(st);
+
+
+
+
+
+
 
 
     }
