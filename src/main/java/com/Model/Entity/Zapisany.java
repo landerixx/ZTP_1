@@ -24,6 +24,11 @@ public class Zapisany {
         this.kursId = kursId;
     }
 
-
-
+    @Override
+    public String toString() {
+        return "Zapisany{" +
+                "kursId=" + kursId +
+                ", studentId=" + studentId +
+                '}';
+    }
 }
