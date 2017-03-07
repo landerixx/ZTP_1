@@ -1,7 +1,7 @@
 package com.Model.DAO;
 
-import com.Model.DataSource;
-import com.Model.Entity.Student;
+import com.Model.ConnectionSingleton;
+import com.Model.DbUtil;
 import com.Model.Entity.Zapisany;
 
 import java.sql.Connection;
@@ -16,19 +16,20 @@ import java.util.List;
  */
 public class ZapisanyDaoImpl implements ZapisanyDao {
 
+    private Connection connection;
+    private Statement statement;
+    private ResultSet rs = null;
+
     public List<Zapisany> getAllZapisany() {
 
-        Connection con =null;
-        Statement stmt = null;
-        ResultSet rs = null;
+
         List<Zapisany> zapisanyList = new ArrayList<Zapisany>();
         String query = "SELECT * FROM zapisany";
 
         try {
-            DataSource dataSource = new DataSource();
-            con = dataSource.createConnection();
-            stmt = con.createStatement();
-            rs = stmt.executeQuery(query);
+            connection = ConnectionSingleton.getConnection();
+            statement = connection.createStatement();
+            rs = statement.executeQuery(query);
 
             while(rs.next()){
 
@@ -42,21 +43,9 @@ public class ZapisanyDaoImpl implements ZapisanyDao {
             e.printStackTrace();
         }
         finally {
-            try
-            {
-                if( con != null ) {
-                    con.close();
-                }
-                if( stmt != null ) {
-                    stmt.close();
-                }
-                if( rs != null ) {
-                    rs.close();
-                }
-            }
-            catch( Exception exe ) {
-                exe.printStackTrace();
-            }
+            DbUtil.close(rs);
+            DbUtil.close(statement);
+            DbUtil.close(connection);
         }
 
         return zapisanyList;
@@ -67,14 +56,12 @@ public class ZapisanyDaoImpl implements ZapisanyDao {
 
     public void addZapisany(Zapisany zapisany) {
 
-        Connection dbConnection = null;
-        Statement statement = null;
+
         String sql = "insert into zapisany values(" + zapisany.getKursId() + "," + "'" + zapisany.getStudentId() + "'"   + ")";
 
         try {
-            DataSource dataSource = new DataSource();
-            dbConnection = dataSource.createConnection();
-            statement = dbConnection.prepareStatement(sql);
+            connection = ConnectionSingleton.getConnection();
+            statement = connection.prepareStatement(sql);
             statement.executeUpdate(sql);
 
             System.out.println("Record is inserted into zapisany table for  Zapisany : (" + zapisany.getKursId() + "," + zapisany.getStudentId() +")");
@@ -83,18 +70,8 @@ public class ZapisanyDaoImpl implements ZapisanyDao {
             e.printStackTrace();
         }
         finally {
-            try
-            {
-                if( dbConnection != null ) {
-                    dbConnection.close();
-                }
-                if( statement != null ) {
-                    statement.close();
-                }
-            }
-            catch( Exception exe ) {
-                exe.printStackTrace();
-            }
+            DbUtil.close(statement);
+            DbUtil.close(connection);
         }
 
     }// public void addZapisany(Zapisany zapisany)
@@ -102,17 +79,14 @@ public class ZapisanyDaoImpl implements ZapisanyDao {
 
     public Zapisany getZapisany(int kursId, int studentId) {
 
-        DataSource dataSource = new DataSource();
-        Connection con = null;
-        Statement stmt = null;
-        ResultSet rs = null;
+
         String query = "SELECT * FROM zapisany where kursid="+kursId +" AND studentid="+studentId;
 
         try{
 
-            con = dataSource.createConnection();
-            stmt = con.createStatement();
-            rs = stmt.executeQuery(query);
+            connection = ConnectionSingleton.getConnection();
+            statement = connection.createStatement();
+            rs = statement.executeQuery(query);
             while( rs.next() ) {
 
                 Zapisany zapisany = new Zapisany();
@@ -128,20 +102,9 @@ public class ZapisanyDaoImpl implements ZapisanyDao {
 
         finally
         {
-            try {
-                if( con != null ) {
-                    con.close();
-                }
-                if( stmt != null ) {
-                    stmt.close();
-                }
-                if( rs != null ) {
-                    rs.close();
-                }
-            }
-            catch( Exception exe ) {
-                exe.printStackTrace();
-            }
+            DbUtil.close(rs);
+            DbUtil.close(statement);
+            DbUtil.close(connection);
         }
         return null;
 
@@ -156,15 +119,13 @@ public class ZapisanyDaoImpl implements ZapisanyDao {
     public void deleteZapisany(int kursId, int studentId) {
 
 
-        Connection dbConnection = null;
-        Statement statement = null;
+
 
         String sql = "delete from zapisany where kursid="+kursId +" AND studentid="+ studentId;
 
         try{
-            DataSource dataSource = new DataSource();
-            dbConnection = dataSource.createConnection();
-            statement = dbConnection.prepareStatement(sql);
+            connection = ConnectionSingleton.getConnection();
+            statement = connection.prepareStatement(sql);
             statement.executeUpdate(sql);
 
             System.out.println("Record is deleted from ZAPISANY table for (kursId,StudentId): ("
@@ -174,18 +135,8 @@ public class ZapisanyDaoImpl implements ZapisanyDao {
             e.printStackTrace();
         }
         finally {
-            try
-            {
-                if( dbConnection != null ) {
-                    dbConnection.close();
-                }
-                if( statement != null ) {
-                    statement.close();
-                }
-            }
-            catch( Exception exe ) {
-                exe.printStackTrace();
-            }
+            DbUtil.close(statement);
+            DbUtil.close(connection);
         }
 
     }//public void deleteZapisany(int kursId, int studentId)

@@ -1,14 +1,15 @@
 package com.ZTP_1;
 
-import com.Model.DataSource;
-import com.Model.Entity.Kurs;
-import com.Model.Entity.Student;
-
-import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 import com.Model.DAO.*;
+import com.Model.Entity.Kurs;
+import com.Model.Entity.Student;
 import com.Model.Entity.Zapisany;
+
+/*
+A "service layer" exists between the UI and the backend
+        systems that store data, and is in charge of managing the business rules of transforming and translating data between those two layers.
+*/
 
 /**
  * Hello world!
@@ -26,14 +27,14 @@ public class App
     {
         System.out.println( "Hello World!" );
 
-        /*
+/*
         StudentDaoImpl stdao= new StudentDaoImpl();
 
         Student stud = new Student();
         stud.setStudentId(3);
         stud.setStudentName("Nowak");
 
-        stdao.addStudent(stud);
+       // stdao.addStudent(stud);
 
 
         List<Student> stList= stdao.getAllStudents();
@@ -62,7 +63,7 @@ public class App
         //KURSY
         //
 
-        /*
+/*
     KursDaoImpl kursdao = new KursDaoImpl();
 
         Kurs kurs = new Kurs();
@@ -80,15 +81,15 @@ public class App
         Kurs kurs2 = kursdao.getKurs(1);
         System.out.println(kurs2);
 
-        kursdao.deleteKurs(1);
+        //kursdao.deleteKurs(1);
         List<Kurs> kursy = kursdao.getAllCourses();
         for(Kurs k: kursy)
             System.out.println(k);
 
-        */
+*/
 
             //ZAPISANY
-
+/*
         Zapisany zapisany = new Zapisany();
         zapisany.setKursId(1);
         zapisany.setStudentId(4);
@@ -109,7 +110,7 @@ public class App
 
         Zapisany zap2 = zapDao.getZapisany(2,3);
         System.out.println(zap2);
-
+*/
 
 
     }

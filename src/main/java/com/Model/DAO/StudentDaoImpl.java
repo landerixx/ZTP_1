@@ -1,6 +1,7 @@
 package com.Model.DAO;
 
-import com.Model.DataSource;
+import com.Model.ConnectionSingleton;
+import com.Model.DbUtil;
 import com.Model.Entity.Student;
 
 import java.sql.Connection;
@@ -15,20 +16,20 @@ import java.util.List;
  */
 public class StudentDaoImpl implements StudentDao {
 
+    private Connection connection;
+    private Statement statement;
+    private ResultSet rs = null;
 
     public List<Student> getAllStudents() {
 
-        Connection con =null;
-        Statement stmt = null;
-        ResultSet rs = null;
+
         List<Student> studList = new ArrayList<Student>();
         String query = "SELECT * FROM student";
 
         try {
-            DataSource dataSource = new DataSource();
-            con = dataSource.createConnection();
-            stmt = con.createStatement();
-            rs = stmt.executeQuery(query);
+            connection = ConnectionSingleton.getConnection();
+            statement = connection.createStatement();
+            rs = statement.executeQuery(query);
 
             while(rs.next()){
 
@@ -42,21 +43,9 @@ public class StudentDaoImpl implements StudentDao {
             e.printStackTrace();
         }
         finally {
-            try
-            {
-                if( con != null ) {
-                    con.close();
-                }
-                if( stmt != null ) {
-                    stmt.close();
-                }
-                if( rs != null ) {
-                    rs.close();
-                }
-            }
-            catch( Exception exe ) {
-                exe.printStackTrace();
-            }
+            DbUtil.close(rs);
+            DbUtil.close(statement);
+            DbUtil.close(connection);
         }
 
         return studList;
@@ -65,14 +54,12 @@ public class StudentDaoImpl implements StudentDao {
 
     public void addStudent(Student student) {
 
-            Connection dbConnection = null;
-            Statement statement = null;
+
             String sql = "insert into student values(" + student.getStudentId() + "," + "'" + student.getStudentName() + "'"   + ")";
 
             try {
-                DataSource dataSource = new DataSource();
-                dbConnection = dataSource.createConnection();
-                statement = dbConnection.prepareStatement(sql);
+                connection = ConnectionSingleton.getConnection();
+                statement = connection.prepareStatement(sql);
                 statement.executeUpdate(sql);
 
                 System.out.println("Record is inserted into student table for  Student : " + student.getStudentName());
@@ -81,18 +68,8 @@ public class StudentDaoImpl implements StudentDao {
                 e.printStackTrace();
             }
             finally {
-                try
-                {
-                    if( dbConnection != null ) {
-                        dbConnection.close();
-                    }
-                    if( statement != null ) {
-                        statement.close();
-                    }
-                }
-                catch( Exception exe ) {
-                    exe.printStackTrace();
-                }
+                DbUtil.close(statement);
+                DbUtil.close(connection);
             }
 
     }// public void addStudent(Student student)
@@ -101,17 +78,14 @@ public class StudentDaoImpl implements StudentDao {
 
     public Student getStudent(int studentId) {
 
-        DataSource dataSource = new DataSource();
-        Connection con = null;
-        Statement stmt = null;
-        ResultSet rs = null;
+
         String query = "SELECT * FROM student where studentid="+studentId;
 
         try{
 
-            con = dataSource.createConnection();
-            stmt = con.createStatement();
-            rs = stmt.executeQuery(query);
+            connection = ConnectionSingleton.getConnection();
+            statement = connection.createStatement();
+            rs = statement.executeQuery(query);
             while( rs.next() ) {
 
                 Student stud = new Student();
@@ -127,20 +101,9 @@ public class StudentDaoImpl implements StudentDao {
 
         finally
         {
-            try {
-                if( con != null ) {
-                    con.close();
-                }
-                if( stmt != null ) {
-                    stmt.close();
-                }
-                if( rs != null ) {
-                    rs.close();
-                }
-            }
-            catch( Exception exe ) {
-                exe.printStackTrace();
-            }
+            DbUtil.close(rs);
+            DbUtil.close(statement);
+            DbUtil.close(connection);
         }
 
         return null;
@@ -149,17 +112,15 @@ public class StudentDaoImpl implements StudentDao {
 
     public void updateStudent(Student student) {
 
-        Connection dbConnection = null;
-        Statement statement = null;
+
 
         String sql = "update student set studentname=" + "'" + student.getStudentName() + "'" + "where studentid="
                 + student.getStudentId();
 
         try {
 
-            DataSource dataSource = new DataSource();
-            dbConnection = dataSource.createConnection();
-            statement = dbConnection.prepareStatement(sql);
+            connection = ConnectionSingleton.getConnection();
+            statement = connection.prepareStatement(sql);
             statement.executeUpdate(sql);
 
             System.out.println("Record is updated into Student table for Student id : "
@@ -170,18 +131,8 @@ public class StudentDaoImpl implements StudentDao {
             e.printStackTrace();
         }
         finally {
-                try
-                {
-                    if( dbConnection != null ) {
-                        dbConnection.close();
-                    }
-                    if( statement != null ) {
-                        statement.close();
-                    }
-                }
-                catch( Exception exe ) {
-                    exe.printStackTrace();
-                }
+            DbUtil.close(statement);
+            DbUtil.close(connection);
             }
     }// public void updateStudent(Student student)
 
@@ -191,15 +142,13 @@ public class StudentDaoImpl implements StudentDao {
 
     public void deleteStudent(int studentId) {
 
-        Connection dbConnection = null;
-        Statement statement = null;
+
 
         String sql = "delete from student where studentid="+ studentId;
 
         try{
-            DataSource dataSource = new DataSource();
-            dbConnection = dataSource.createConnection();
-            statement = dbConnection.prepareStatement(sql);
+            connection = ConnectionSingleton.getConnection();
+            statement = connection.prepareStatement(sql);
             statement.executeUpdate(sql);
 
             System.out.println("Record is deleted from Student table for Student id : "
@@ -209,18 +158,8 @@ public class StudentDaoImpl implements StudentDao {
             e.printStackTrace();
         }
         finally {
-            try
-            {
-                if( dbConnection != null ) {
-                    dbConnection.close();
-                }
-                if( statement != null ) {
-                    statement.close();
-                }
-            }
-            catch( Exception exe ) {
-                exe.printStackTrace();
-            }
+            DbUtil.close(statement);
+            DbUtil.close(connection);
         }
 
     }// public void deleteStudent(int studentId)

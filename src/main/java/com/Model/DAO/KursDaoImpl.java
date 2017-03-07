@@ -1,8 +1,8 @@
 package com.Model.DAO;
 
-import com.Model.DataSource;
+import com.Model.ConnectionSingleton;
+import com.Model.DbUtil;
 import com.Model.Entity.Kurs;
-import com.Model.Entity.Student;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -16,19 +16,21 @@ import java.util.List;
  */
 public class KursDaoImpl implements KursDao {
 
+    private Connection connection;
+    private Statement statement;
+    private ResultSet rs = null;
+
+
     public List<Kurs> getAllCourses() {
 
-        Connection con =null;
-        Statement stmt = null;
-        ResultSet rs = null;
+
         List<Kurs> kursList = new ArrayList<Kurs>();
         String query = "SELECT * FROM kurs";
 
         try {
-            DataSource dataSource = new DataSource();
-            con = dataSource.createConnection();
-            stmt = con.createStatement();
-            rs = stmt.executeQuery(query);
+            connection = ConnectionSingleton.getConnection();
+            statement = connection.createStatement();
+            rs = statement.executeQuery(query);
 
             while(rs.next()){
 
@@ -42,21 +44,9 @@ public class KursDaoImpl implements KursDao {
             e.printStackTrace();
         }
         finally {
-            try
-            {
-                if( con != null ) {
-                    con.close();
-                }
-                if( stmt != null ) {
-                    stmt.close();
-                }
-                if( rs != null ) {
-                    rs.close();
-                }
-            }
-            catch( Exception exe ) {
-                exe.printStackTrace();
-            }
+            DbUtil.close(rs);
+            DbUtil.close(statement);
+            DbUtil.close(connection);
         }
 
         return kursList;
@@ -66,14 +56,12 @@ public class KursDaoImpl implements KursDao {
 
     public void addKurs(Kurs kurs) {
 
-        Connection dbConnection = null;
-        Statement statement = null;
+
         String sql = "insert into kurs values(" + kurs.getKursId() + "," + "'" + kurs.getKursName() + "'"   + ")";
 
         try {
-            DataSource dataSource = new DataSource();
-            dbConnection = dataSource.createConnection();
-            statement = dbConnection.prepareStatement(sql);
+            connection = ConnectionSingleton.getConnection();
+            statement = connection.prepareStatement(sql);
             statement.executeUpdate(sql);
 
             System.out.println("Record is inserted into kurs table for  Kurs : " + kurs.getKursName());
@@ -82,18 +70,8 @@ public class KursDaoImpl implements KursDao {
             e.printStackTrace();
         }
         finally {
-            try
-            {
-                if( dbConnection != null ) {
-                    dbConnection.close();
-                }
-                if( statement != null ) {
-                    statement.close();
-                }
-            }
-            catch( Exception exe ) {
-                exe.printStackTrace();
-            }
+            DbUtil.close(statement);
+            DbUtil.close(connection);
         }
 
     } // public void addKurs(Kurs kurs)
@@ -101,17 +79,15 @@ public class KursDaoImpl implements KursDao {
     public Kurs getKurs(int kursId) {
 
 
-        DataSource dataSource = new DataSource();
-        Connection con = null;
-        Statement stmt = null;
-        ResultSet rs = null;
+
         String query = "SELECT * FROM kurs where kursid="+kursId;
 
         try{
 
-            con = dataSource.createConnection();
-            stmt = con.createStatement();
-            rs = stmt.executeQuery(query);
+            connection = ConnectionSingleton.getConnection();
+            statement = connection.createStatement();
+            rs = statement.executeQuery(query);
+
             while( rs.next() ) {
 
                 Kurs kurs = new Kurs();
@@ -127,20 +103,9 @@ public class KursDaoImpl implements KursDao {
 
         finally
         {
-            try {
-                if( con != null ) {
-                    con.close();
-                }
-                if( stmt != null ) {
-                    stmt.close();
-                }
-                if( rs != null ) {
-                    rs.close();
-                }
-            }
-            catch( Exception exe ) {
-                exe.printStackTrace();
-            }
+            DbUtil.close(rs);
+            DbUtil.close(statement);
+            DbUtil.close(connection);
         }
         return null;
     }//public Kurs getKurs(int KursId)
@@ -150,17 +115,15 @@ public class KursDaoImpl implements KursDao {
 
     public void updateKurs(Kurs kurs) {
 
-        Connection dbConnection = null;
-        Statement statement = null;
+
 
         String sql = "update kurs set kursname=" + "'" + kurs.getKursName() + "'" + "where kursid="
                 + kurs.getKursId();
 
         try {
 
-            DataSource dataSource = new DataSource();
-            dbConnection = dataSource.createConnection();
-            statement = dbConnection.prepareStatement(sql);
+            connection = ConnectionSingleton.getConnection();
+            statement = connection.prepareStatement(sql);
             statement.executeUpdate(sql);
 
             System.out.println("Record is updated into Kurs table for Kurs id : "
@@ -171,18 +134,9 @@ public class KursDaoImpl implements KursDao {
             e.printStackTrace();
         }
         finally {
-            try
-            {
-                if( dbConnection != null ) {
-                    dbConnection.close();
-                }
-                if( statement != null ) {
-                    statement.close();
-                }
-            }
-            catch( Exception exe ) {
-                exe.printStackTrace();
-            }
+            DbUtil.close(statement);
+            DbUtil.close(connection);
+
         }
     } //  public void updateKurs(Kurs kurs)
 
@@ -190,15 +144,12 @@ public class KursDaoImpl implements KursDao {
 
     public void deleteKurs(int kursId) {
 
-        Connection dbConnection = null;
-        Statement statement = null;
 
         String sql = "delete from kurs where kursid="+ kursId;
 
         try{
-            DataSource dataSource = new DataSource();
-            dbConnection = dataSource.createConnection();
-            statement = dbConnection.prepareStatement(sql);
+            connection = ConnectionSingleton.getConnection();
+            statement = connection.prepareStatement(sql);
             statement.executeUpdate(sql);
 
             System.out.println("Record is deleted from Kurs table for Kurs id : "
@@ -208,18 +159,8 @@ public class KursDaoImpl implements KursDao {
             e.printStackTrace();
         }
         finally {
-            try
-            {
-                if( dbConnection != null ) {
-                    dbConnection.close();
-                }
-                if( statement != null ) {
-                    statement.close();
-                }
-            }
-            catch( Exception exe ) {
-                exe.printStackTrace();
-            }
+            DbUtil.close(statement);
+            DbUtil.close(connection);
         }
 
     }// public void deleteKurs(int KursId)
