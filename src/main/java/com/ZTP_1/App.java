@@ -7,6 +7,8 @@ import com.Model.Entity.Student;
 import com.Model.Entity.Zapisany;
 
 /*
+
+http://www.codesenior.com/en/tutorial/Spring-Generic-DAO-and-Generic-Service-Implementation
 A "service layer" exists between the UI and the backend
         systems that store data, and is in charge of managing the business rules of transforming and translating data between those two layers.
 */
