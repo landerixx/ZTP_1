@@ -30,31 +30,31 @@ public class ZapisanyServiceImpl implements ZapisanyService  {
         if (getAllIndexes().contains(new Pair<Integer>(kursId,studentId)))
             return zapisanyDao.getZapisany(kursId,studentId);
         else
-            System.out.println("NIE MA Zapisany O PODANYCH ID");
+            System.err.println("Błąd. Nie ma encji Zapisany O PODANYCH ID kursId: "+kursId + "oraz studentID: "+ studentId );
 
         return null;
     }
 
     public void add(Zapisany entity) {
 
-        if(!getAllIndexes().contains(new Pair<Integer>(entity.getKursId(),entity.getStudentId())))
+        if(entity!=null &&!getAllIndexes().contains(new Pair<Integer>(entity.getKursId(),entity.getStudentId())))
             zapisanyDao.addZapisany(entity);
         else
-            System.out.println("W bazie jest juz zapisany z takimi ID, nie mozna dodac");
+            System.err.println("Błąd. Nie można wprowadzić tej encji Zapisany do bazy");
     }
 
 
     public void update(Zapisany entity) {
-        System.out.println("PUSTE");
+        System.out.println("update zapisany, puste");
     }
 
 
     public void remove(Zapisany entity) {
 
-        if(getAllIndexes().contains(new Pair<Integer>(entity.getKursId(),entity.getStudentId())))
+        if(entity!=null &&getAllIndexes().contains(new Pair<Integer>(entity.getKursId(),entity.getStudentId())))
             zapisanyDao.deleteZapisany(entity.getKursId(),entity.getStudentId());
         else
-            System.out.println("Nie istnieje  zapisany w bazie z takimi ID");
+            System.err.println("Nie istnieje  zapisany w bazie z takimi ID");
     }
 
 

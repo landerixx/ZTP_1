@@ -32,7 +32,7 @@ public class StudentServiceImpl implements StudentService {
         if(getAllIndexes().contains(studentId))
             return studentDao.getStudent(studentId);
         else
-            System.out.println("NIE MA STUDENTA O PODANYM ID");
+            System.err.println("Błąd. NIE MA STUDENTA O PODANYM ID: " + studentId);
          return null;
 
 
@@ -41,28 +41,28 @@ public class StudentServiceImpl implements StudentService {
 
     public void add(Student entity) {
 
-        if(!getAllIndexes().contains(entity.getStudentId()))
+        if(entity!=null && !getAllIndexes().contains(entity.getStudentId()))
             studentDao.addStudent(entity);
         else
-            System.out.println("W bazie jest juz student z takim ID, nie mozna dodac");
+            System.err.println("Błąd. Nie można wprowadzić tego studenta do bazy.");
     }
 
 
-    //MOZE NIE ISTNIEJ STUDENT W BAZIE
+
     public void update(Student entity) {
 
-        if(getAllIndexes().contains(entity.getStudentId()))
+        if(entity!=null && getAllIndexes().contains(entity.getStudentId()))
             studentDao.updateStudent(entity);
         else
-            System.out.println("W BAZIE NIE ISTNIEJE STUDENT O TAKIM ID");
+            System.err.println("Błąd. W BAZIE NIE ISTNIEJE STUDENT O TAKIM ID");
     }
 
     public void remove(Student entity) {
 
-        if(getAllIndexes().contains(entity.getStudentId()))
+        if(entity!=null && getAllIndexes().contains(entity.getStudentId()))
             studentDao.deleteStudent(entity.getStudentId());
         else
-            System.out.println("Nie istnieje  student w bazie z takim ID");
+            System.err.println("Błąd. Nie istnieje  student w bazie z takim ID");
     }
 
 
