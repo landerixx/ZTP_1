@@ -20,4 +20,6 @@ public interface ZapisanyDao {
 
     public void deleteZapisany(int kursId,int studentId);
 
+    public void deleteAllZapisany(int ID, boolean whichOne);
+
 }

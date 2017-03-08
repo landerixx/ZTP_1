@@ -69,4 +69,12 @@ public class ZapisanyServiceImpl implements ZapisanyService  {
 
         return zapisanyIdList;
     }
+
+    public boolean deleteAllZapisanyStudent(int studentId) {
+        return false;
+    }
+
+    public boolean deleteAllZapisanyKurs(int kursId) {
+        return false;
+    }
 }

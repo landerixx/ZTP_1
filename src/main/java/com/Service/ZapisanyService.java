@@ -21,7 +21,11 @@ public interface ZapisanyService {
 
 
 
-    public List<Pair<Integer>> getAllIndexes();}
+    public List<Pair<Integer>> getAllIndexes();
+
+    public boolean deleteAllZapisanyStudent(int studentId);
+    public boolean deleteAllZapisanyKurs(int kursId);
+}
 
 
 class Pair<T> {
