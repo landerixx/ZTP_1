@@ -54,12 +54,12 @@ A "service layer" exists between the UI and the backend
  *
  *
  *
- * 1.CREATE
+ * 1.CREATE +
  *   +   1.WPROWADZ STUDENTA
  *   +   2.WPROWADZ KURS
  *
- *      3.ZAPIS STUDENTA NA KURS
- *      4. Zapis STUDENTA DO KURSU
+ *    + 3.ZAPIS STUDENTA NA KURS
+ *
  *
  *      9.WYJSCIE DO MENU GL.
  *

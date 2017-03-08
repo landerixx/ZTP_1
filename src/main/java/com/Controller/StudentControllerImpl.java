@@ -143,6 +143,23 @@ public class StudentControllerImpl implements StudentController {
         }
 
 
+        return result;
+    } // public boolean enrollStudentforCourse(int studentId, int kursId)
+
+
+
+    //===================================================
+
+
+    public boolean unrollFromCourse(int studentId, int kursId) {
+        return false;
+    }
+
+    public boolean unrollFromAllCourses(int studentId) {
+        return false;
+    }
+
+    public boolean removeStudent(int studentId) {
         return false;
     }
 

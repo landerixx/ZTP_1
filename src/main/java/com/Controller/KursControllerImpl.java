@@ -128,4 +128,21 @@ public class KursControllerImpl implements KursController {
     }//  public boolean displayCourseWithStudents(int kursId)
 
 
+
+
+    //=================================================
+
+    public boolean cancelStudent(int kursId, int StudentId) {
+        return false;
+    }
+
+    public boolean cancelAllStudents(int kursId) {
+        return false;
+    }
+
+    public boolean removeCourse(int kursId) {
+        return false;
+    }
+
+
 }

@@ -12,4 +12,8 @@ public interface StudentController {
     public boolean displayStudentWithCourses(int studentId);
     public boolean enrollStudentforCourse(int studentId, int kursId);
 
+    public boolean unrollFromCourse(int studentId, int kursId);
+    public boolean unrollFromAllCourses(int studentId);
+    public boolean removeStudent(int studentId);
+
 }

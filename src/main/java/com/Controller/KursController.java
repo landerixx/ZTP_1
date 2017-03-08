@@ -10,4 +10,9 @@ public interface KursController {
     public boolean displayCourse(int kursId);
     public boolean changeCourseName(int kursId, String newName);
     public boolean displayCourseWithStudents(int kursId);
+
+    public boolean cancelStudent(int kursId, int StudentId);
+    public boolean cancelAllStudents(int kursId);
+    public boolean removeCourse(int kursId);
+
 }
