@@ -35,6 +35,25 @@ A "service layer" exists between the UI and the backend
  * ZMIENIC VOID NA BOOL W SERWISACH, BEDZIE LATWIEJ W KOTROLERACH
  *
  *
+ *
+ *
+ *
+ *
+ * 3 drogi:
+ * ALBO
+ *  STWORZYC DELETE W ZAPISYCONTROLLER ORAZ wyswietlanie studenta i jego kursow/ kursu i jego studentow
+ *
+ * ALBO
+ *  DODAC do KursController: ZapisanyService oraz StudentController
+ *  TWORZYC DEDLETE I METODY W ODOPOWIEDNICH KONTROLERACH
+ *
+ * ALBO
+ *  DODAC DO KursController: ZapisanyService, StudentService i StudentView -> wybieram to
+ *
+ *
+ *
+ *
+ *
  * 1.CREATE
  *   +   1.WPROWADZ STUDENTA
  *   +   2.WPROWADZ KURS
@@ -269,12 +288,12 @@ public class App
         Scanner scanner = new Scanner(System.in);
 
 
-/*
+
                                     //KURSY
 
         int kursIndex;
         String kursName;
-
+/*
         //UTWORZ KURS
         System.out.println("Tworzysz kurs. Podaj indeks");
          kursIndex = scanner.nextInt();
@@ -300,7 +319,7 @@ public class App
        //WYSWIETL KURS
         System.out.println("Podaj nr indedksu kursu, ktorego chcesz wyswietlic");
         kursIndex=scanner.nextInt();
-        kursController.displayCourse(kursIndex);
+        kursController.showCourse(kursIndex);
 
 */
 
@@ -332,7 +351,7 @@ public class App
         studentName = scanner.next();
         studentController.changeStudentName(studentIndex,studentName);
 
-        */
+
 
         studentController.displayAllStudents();
 
@@ -340,6 +359,37 @@ public class App
         System.out.println("Podaj nr indeksu studenta, ktorego chcesz wyswietlic");
         studentIndex=scanner.nextInt();
         studentController.displayStudent(studentIndex);
+
+        */
+//==============================
+
+
+        //SPRAWDZAM zapisanyDAO delete ALL STUDENTS/COURSES
+        //DAM TRUE USUNIETE WSZYSTKIE KURSY STUDENTA
+        //DAM FALSE USUNIETE WSZYSSCY STUDENCI KURSU
+
+      //  zapisanyDao.deleteAllZapisany(3,true);
+          zapisanyService.deleteAllZapisanyStudentsFromKurs(3);
+        zapisanyService.deleteAllZapisanyCoursesFromStudent(5);
+
+
+
+        /*
+        //KOLEJNY ETAP
+
+        kursController=new KursControllerImpl(kursService,kursView,zapisanyService,studentService,studentView);
+
+        //WYSWIETL KURS WRAZ Z JEGO STUDENTAMI
+
+        System.out.println("Podaj nr indeksu kursu, ktorego chcesz wyswietlic razem z zapisanymi studentami");
+        kursIndex=scanner.nextInt();
+
+//        kursController.displayCourseWithStudents(kursIndex);
+
+
+*/
+
+
 
 
 

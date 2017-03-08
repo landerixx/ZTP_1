@@ -80,38 +80,40 @@ public class ZapisanyServiceImpl implements ZapisanyService  {
         List<Zapisany> zapisanyList = this.getAll();
         List<Pair<Integer>> zapisanyIdList = new ArrayList<Pair<Integer>>();
         for(Zapisany zapisany: zapisanyList)
-            zapisanyIdList.add(new Pair<Integer>(zapisany.getKursId(),zapisany.getKursId()));
+            zapisanyIdList.add(new Pair<Integer>(zapisany.getKursId(),zapisany.getStudentId()));
 
         return zapisanyIdList;
     }
 
-    public boolean deleteAllZapisanyStudent(int studentId) {
+
+    //TRUE
+    public boolean deleteAllZapisanyCoursesFromStudent(int studentId) {
         boolean result =false;
 
-        Set<Integer> studentsIdSet = getIds(true);
+        Set<Integer> coursessIdSet = getIds(studentId,true);
 
-        if(studentsIdSet.contains(studentId)){
+        if(!coursessIdSet.isEmpty()){
             zapisanyDao.deleteAllZapisany(studentId,true);
             result=true;
         }
         else
-            System.err.println("Nie istnieje  Student/Zapisany w bazie z takim ID");
+            System.err.println("Nie istnieje  student, ktory zapisal sie na jakies kursy w bazie z takim ID studenta");
         return result;
     }
 
-
-    public boolean deleteAllZapisanyKurs(int kursId) {
+    //FALSE
+    public boolean deleteAllZapisanyStudentsFromKurs(int kursId) {
 
         boolean result =false;
 
-        Set<Integer> coursesIdSet = getIds(false);
+        Set<Integer> studentsIdSet = getIds(kursId,false);
 
-        if(coursesIdSet.contains(kursId)){
+        if(!studentsIdSet.isEmpty()){
             zapisanyDao.deleteAllZapisany(kursId,false);
             result=true;
         }
         else
-            System.err.println("Nie istnieje  KURS/Zapisany w bazie z takim ID");
+            System.err.println("Nie istnieje  KURS, na ktory zapisali sie jacys studenci w bazie z takim ID kursu");
         return result;
     }
 
@@ -120,19 +122,29 @@ public class ZapisanyServiceImpl implements ZapisanyService  {
 
 
     /**
+     * TRUE -> DOSTAJEMY KURSY
+     * FALSE -> DOSTAJEMY STUDENTOW
      *
+     *INDEKSY WSZYSTKICH STUDENTOW zapisanych na KURS o indeksie ID  GDY FALSE
+     * LUB
+     * INDEKSY WSZYSTKICH KURSOW na ktore zapisal sie STUDENT o indeksie ID GDY TRUE
      * @param whichOne True-> studentsId, kursId otherwise
      * @return
      */
-    private Set<Integer> getIds(boolean whichOne){
+    public Set<Integer> getIds(int ID,boolean whichOne){
 
         List<Pair<Integer>> zapisanyIdList=getAllIndexes();
         Set<Integer> idSet = new HashSet<Integer>();
         for(Pair<Integer> tuple: zapisanyIdList) {
-            if(whichOne)
-                idSet.add(tuple.p2);
-            else
-                idSet.add(tuple.p1);
+            if(!whichOne) {
+                if(ID==tuple.kursId)
+                    idSet.add(tuple.studentId);
+            }
+            else{
+                if(ID==tuple.studentId)
+                idSet.add(tuple.kursId);
+            }
+
         }
 
         return idSet;

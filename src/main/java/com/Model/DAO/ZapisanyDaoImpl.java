@@ -144,8 +144,17 @@ public class ZapisanyDaoImpl implements ZapisanyDao {
 
     /**
      *
+     * WHEN whichOne is TRUE
+     *  THEN ID=studentID, usuwamy wszystkie KURSY na ktore zapisal sie STUDENT
+     *
+     *  WHEN whichOne is FALSE
+     *  THEN ID=kursID, usuwamy wszystkich STUDENTOW zapisanych na ten KURS
+     *
+     *
      * @param ID: Student or kurs id
-     * @param whichOne: BOOLEAN, if equals to TRUE: ID=studentID, kursId otherwise
+     * @param whichOne: BOOLEAN, if equals  TRUE: ID=studentID, kursId otherwise
+     *
+     *
      */
 
 
@@ -165,9 +174,9 @@ public class ZapisanyDaoImpl implements ZapisanyDao {
 
             System.out.print("Records are deleted from ZAPISANY table for  ");
             if(whichOne)
-                System.out.println("student ID: " + ID);
+                System.out.println("WSZYSTKIE ZAPISANIA Z student ID: " + ID +" ZATEM USUNIETE WSZYSTKIE KURSY TEGO STUDENTA");
             else
-                System.out.println("kurs ID: " + ID);
+                System.out.println("WSZYSTKIE ZAPISANIA Z kurs ID: " + ID + " ZATEM USUNIECI WSZYSCY STUDENCI Z TEGO KURSU");
         }
         catch( SQLException e ) {
             e.printStackTrace();

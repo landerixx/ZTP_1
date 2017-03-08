@@ -26,7 +26,7 @@ public class KursView {
 
     }
 
-    public void displayAllCourses(HashMap<Integer,String> map){
+    public void showAllCourses(HashMap<Integer,String> map){
 
         inKursView();
 
@@ -35,20 +35,25 @@ public class KursView {
             System.out.println("Kurs nr: " + entry.getKey() + " oraz jego nazwa: "+ entry.getValue());
 
         }
-    }// public void displayAllCourses(HashMap<Integer,String> map)
+    }// public void showAllCourses(HashMap<Integer,String> map)
 
-    public void displayCourse(int kursId, String name){
+    public void showCourse(int kursId, String name){
 
         inKursView();
         System.out.println("Kurs: Id kursu " + kursId + " oraz jego nazwa: " + name);
     }
 
 
-    public void displayUpdatedCourse(int kursId, String newName){
+    public void showUpdatedCourse(int kursId, String newName){
 
         inKursView();
         System.out.println("Kurs o indeksie: " + kursId + " zostal zupdatowany. Jego nowa nazwa to:  " +  newName);
 
+    }
+
+    public void showCourseWithStudents(){
+
+        System.out.println("Zapisani studenci na ten kurs:");
     }
 
 

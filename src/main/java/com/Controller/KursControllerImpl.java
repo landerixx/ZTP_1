@@ -1,11 +1,16 @@
 package com.Controller;
 
 import com.Model.Entity.Kurs;
+import com.Model.Entity.Student;
 import com.Service.KursService;
+import com.Service.StudentService;
+import com.Service.ZapisanyService;
 import com.View.KursView;
+import com.View.StudentView;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Piotrek on 2017-03-07.
@@ -15,6 +20,10 @@ public class KursControllerImpl implements KursController {
     private KursService kursService;
     private KursView kursView;
 
+    private ZapisanyService zapisanyService;
+    private StudentService studentService;
+    private StudentView studentView;
+
     public KursControllerImpl(){};
 
     public KursControllerImpl(KursService kursService, KursView kursView){
@@ -23,6 +32,17 @@ public class KursControllerImpl implements KursController {
         this.kursView=kursView;
     }
 
+    public KursControllerImpl(KursService kursService, KursView kursView, ZapisanyService zapisanyService,
+    StudentService studentService, StudentView studentView){
+
+
+        this.kursService=kursService;
+        this.kursView=kursView;
+        this.zapisanyService=zapisanyService;
+        this.studentService=studentService;
+        this.studentView=studentView;
+
+    }
 
 
    public  boolean createKurs(int kursId, String name){
@@ -46,7 +66,7 @@ public class KursControllerImpl implements KursController {
         for(Kurs kurs: courseList)
             map.put(kurs.getKursId(),kurs.getKursName());
 
-        kursView.displayAllCourses(map);
+        kursView.showAllCourses(map);
 
     }//  public void displayCourses()
 
@@ -57,13 +77,13 @@ public class KursControllerImpl implements KursController {
         Kurs kurs = kursService.get(kursId);
         if(kurs!=null){
             result=true;
-            kursView.displayCourse(kursId,kurs.getKursName());
+            kursView.showCourse(kursId,kurs.getKursName());
 
         }
 
         return result;
 
-    }// public void displayCourse(int kursId, String name)
+    }// public void showCourse(int kursId, String name)
 
 
 
@@ -74,18 +94,36 @@ public class KursControllerImpl implements KursController {
         result = kursService.update(new Kurs(kursId,newName));
 
         if(result)
-            kursView.displayUpdatedCourse(kursId,newName);
+            kursView.showUpdatedCourse(kursId,newName);
 
         return result;
 
     }//public boolean changeCourseName(int kursId, String newName)
 
+
+
+
+    //======================================================
+
+
     public boolean displayCourseWithStudents(int kursId) {
 
         boolean result=displayCourse(kursId);
+
+        kursView.showCourseWithStudents();
+
+        Set<Integer> studentIDs= zapisanyService.getIds(kursId,false); //true -> wyciagniemy wszystkich studentow
+        Student stud;
+        System.out.println(studentIDs);
+        for(Integer id: studentIDs) {
+
+            stud = studentService.get(id);
+            studentView.showStudent(id,stud.getStudentName());
+        }
+
         return result;
 
-    }
+    }//  public boolean displayCourseWithStudents(int kursId)
 
 
 }

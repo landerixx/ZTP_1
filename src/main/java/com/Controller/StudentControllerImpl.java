@@ -1,6 +1,5 @@
 package com.Controller;
 
-import com.Model.Entity.Kurs;
 import com.Model.Entity.Student;
 import com.Service.StudentService;
 import com.View.StudentView;
@@ -46,7 +45,7 @@ public class StudentControllerImpl implements StudentController {
         for(Student stud: studentList)
             map.put(stud.getStudentId(),stud.getStudentName());
 
-        studentView.displayAllCourses(map);
+        studentView.showAllCourses(map);
 
     }//  public void displayAllStudents()
 
@@ -59,7 +58,7 @@ public class StudentControllerImpl implements StudentController {
         Student student = studentService.get(studentId);
         if(student!=null){
             result=true;
-            studentView.displayStudent(studentId,student.getStudentName());
+            studentView.showStudent(studentId,student.getStudentName());
 
         }
 
@@ -72,7 +71,7 @@ public class StudentControllerImpl implements StudentController {
         result = studentService.update(new Student(studentId,newName));
 
         if(result)
-            studentView.displayUpdatedStudent(studentId,newName);
+            studentView.showUpdatedStudent(studentId,newName);
 
         return result;
 

@@ -1,11 +1,9 @@
 package com.Service;
 
-import com.Model.Entity.Student;
 import com.Model.Entity.Zapisany;
 
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Piotrek on 2017-03-07.
@@ -23,15 +21,19 @@ public interface ZapisanyService {
 
     public List<Pair<Integer>> getAllIndexes();
 
-    public boolean deleteAllZapisanyStudent(int studentId);
-    public boolean deleteAllZapisanyKurs(int kursId);
+    public boolean deleteAllZapisanyCoursesFromStudent(int studentId);
+    public boolean deleteAllZapisanyStudentsFromKurs(int kursId);
+
+
+
+    public Set<Integer> getIds(int ID,boolean whichOne);
 }
 
 
 class Pair<T> {
-    T p1, p2;
-    Pair(T p1, T p2) {
-        this.p1 = p1;
-        this.p2 = p2;
+    T kursId, studentId;
+    Pair(T kursId, T studentId) {
+        this.kursId = kursId;
+        this.studentId = studentId;
     }
 }

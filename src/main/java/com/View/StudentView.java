@@ -26,7 +26,7 @@ public class StudentView {
     }//  public void addedStudent(int studentId, String name)
 
 
-    public void displayAllCourses(HashMap<Integer,String> map){
+    public void showAllCourses(HashMap<Integer,String> map){
 
         inStudentView();
 
@@ -35,22 +35,21 @@ public class StudentView {
             System.out.println("Student nr: " + entry.getKey() + " oraz jego nazwa: "+ entry.getValue());
 
         }
-    }//    public void displayAllCourses(HashMap<Integer,String> map)
+    }//    public void showAllCourses(HashMap<Integer,String> map)
 
 
 
 
-    public void displayUpdatedStudent(int studentId, String newName){
+    public void showUpdatedStudent(int studentId, String newName){
 
         inStudentView();
         System.out.println("Student o indeksie: " + studentId + " zostal zupdatowany. Jego nowa nazwa to:  " +  newName);
 
-    }// public void displayUpdatedStudent(int studentId, String newName)
+    }// public void showUpdatedStudent(int studentId, String newName)
 
 
-    public void displayStudent(int studentId, String name){
+    public void showStudent(int studentId, String name){
 
-        inStudentView();
         System.out.println("Student: Id studenta " + studentId + " oraz jego nazwa: " + name);
     }
 
