@@ -39,30 +39,47 @@ public class StudentServiceImpl implements StudentService {
     }
 
 
-    public void add(Student entity) {
+    public boolean add(Student entity) {
 
-        if(entity!=null && !getAllIndexes().contains(entity.getStudentId()))
+        boolean result=false;
+
+        if(entity!=null && !getAllIndexes().contains(entity.getStudentId())) {
             studentDao.addStudent(entity);
+            result=true;
+        }
         else
             System.err.println("Błąd. Nie można wprowadzić tego studenta do bazy.");
+
+        return result;
     }
 
 
 
-    public void update(Student entity) {
+    public boolean update(Student entity) {
 
-        if(entity!=null && getAllIndexes().contains(entity.getStudentId()))
+        boolean result=false;
+
+        if(entity!=null && getAllIndexes().contains(entity.getStudentId())) {
             studentDao.updateStudent(entity);
+            result =true;
+        }
         else
             System.err.println("Błąd. W BAZIE NIE ISTNIEJE STUDENT O TAKIM ID");
+
+        return result;
     }
 
-    public void remove(Student entity) {
+    public boolean remove(Student entity) {
 
-        if(entity!=null && getAllIndexes().contains(entity.getStudentId()))
+        boolean result=false;
+        if(entity!=null && getAllIndexes().contains(entity.getStudentId())) {
             studentDao.deleteStudent(entity.getStudentId());
+            result =true;
+        }
         else
             System.err.println("Błąd. Nie istnieje  student w bazie z takim ID");
+
+        return result;
     }
 
 

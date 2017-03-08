@@ -1,22 +1,13 @@
 package com.Controller;
 
-import com.Service.StudentService;
-import com.View.StudentView;
-
 /**
- * Created by Piotrek on 2017-03-07.
+ * Created by Piotrek on 2017-03-08.
  */
-public class StudentController {
+public interface StudentController {
 
-
-    private StudentService studentService;
-    private StudentView studentView;
-
-    public StudentController(){};
-    public StudentController(StudentService studentService, StudentView studentView){
-
-        this.studentService=studentService;
-        this.studentView=studentView;
-    }
+    public boolean createStudent(int studentId, String name);
+    public void displayAllStudents();
+    public boolean displayStudent(int studentId);
+    public boolean changeStudentName(int studentId, String newName);
 
 }

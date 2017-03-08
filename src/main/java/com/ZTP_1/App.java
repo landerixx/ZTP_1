@@ -1,15 +1,9 @@
 package com.ZTP_1;
 
-import java.util.List;
 import java.util.Scanner;
 
-import com.Controller.KursController;
-import com.Controller.StudentController;
-import com.Controller.ZapisanyController;
+import com.Controller.*;
 import com.Model.DAO.*;
-import com.Model.Entity.Kurs;
-import com.Model.Entity.Student;
-import com.Model.Entity.Zapisany;
 import com.Service.*;
 import com.View.KursView;
 import com.View.StudentView;
@@ -42,7 +36,7 @@ A "service layer" exists between the UI and the backend
  *
  *
  * 1.CREATE
- *      1.WPROWADZ STUDENTA
+ *   +   1.WPROWADZ STUDENTA
  *   +   2.WPROWADZ KURS
  *
  *      3.ZAPIS STUDENTA NA KURS
@@ -51,11 +45,11 @@ A "service layer" exists between the UI and the backend
  *
  * 2.READ
  *
- *      1. WYSWIETL LISTE WSZYSTKICH STUDENTOW
+ *    + 1. WYSWIETL LISTE WSZYSTKICH STUDENTOW
  *    +  2. WYSWIETL LISTE WSZYSTKICH KURSOW
  *
  *     +   3. WYSWIETL KURS
- *        4. WYSWIETL STUDENTA
+ *     +   4. WYSWIETL STUDENTA
  *
  *      5. POKAZ STUDENTA wraz z jego kursami
  *      6. POKAZ KURS wraz z jego studentami
@@ -64,7 +58,7 @@ A "service layer" exists between the UI and the backend
  *
  * 3.UPDATE
  *
- *      1. EDYTUJ NAZWISKO STUDENTA
+ *   +   1. EDYTUJ NAZWISKO STUDENTA
  *   +   2. EDYTUJ NAZWE KURSU
  *
  *      9.WYJSCIE DO MENU GL.
@@ -267,23 +261,29 @@ public class App
         ZapisanyView zapisanyView = new ZapisanyView();
 
       //Controllers
-        KursController kursController = new KursController(kursService,kursView);
-        StudentController studentController = new StudentController(studentService,studentView);
+        KursController kursController = new KursControllerImpl(kursService,kursView);
+        StudentController studentController = new StudentControllerImpl(studentService,studentView);
         ZapisanyController zapisanyController = new ZapisanyController(zapisanyService,zapisanyView);
 
 
         Scanner scanner = new Scanner(System.in);
 
-        /*
+
+/*
+                                    //KURSY
+
+        int kursIndex;
+        String kursName;
+
         //UTWORZ KURS
         System.out.println("Tworzysz kurs. Podaj indeks");
-        int index = scanner.nextInt();
+         kursIndex = scanner.nextInt();
         System.out.println("Podaj nazwe kursu");
-        String name = scanner.next();
-        kursController.createKurs(index,name);
+         kursName = scanner.next();
+        kursController.createKurs(kursIndex,kursName);
 
 
-        */
+
 
         //WYSWIETL WSZYSTKIE KURSY
         kursController.displayCourses();
@@ -291,10 +291,10 @@ public class App
 
         //EDYTUJ NAZWE KURSU
         System.out.println("Podaj nr indeksu kursu, ktoremu chcesz zmienic nazwe.");
-        int kursIndex = scanner.nextInt();
+        kursIndex = scanner.nextInt();
         System.out.println("Podaj nowa nazwe");
-        String newName = scanner.next();
-        kursController.changeCourseName(kursIndex,newName);
+         kursName = scanner.next();
+        kursController.changeCourseName(kursIndex,kursName);
 
 
        //WYSWIETL KURS
@@ -302,14 +302,44 @@ public class App
         kursIndex=scanner.nextInt();
         kursController.displayCourse(kursIndex);
 
+*/
 
 
+                                     //STUDENCI
 
 
+        int studentIndex;
+        String studentName;
+
+        /*
+        //UTWORZ STUDENTA
+
+        System.out.println("Tworzysz studenta. Podaj indeks");
+        studentIndex = scanner.nextInt();
+        System.out.println("Podaj nazwe studenta");
+        studentName = scanner.next();
+        studentController.createStudent(studentIndex,studentName);
 
 
+        //WYSWIETL WSZYSTKICH STUDENTOW
+        studentController.displayAllStudents();
 
+        //EDYTUJ NAZWE Studenta
 
+        System.out.println("Podaj nr indeksu studenta, ktoremu chcesz zmienic nazwe.");
+        studentIndex = scanner.nextInt();
+        System.out.println("Podaj nowa nazwe");
+        studentName = scanner.next();
+        studentController.changeStudentName(studentIndex,studentName);
+
+        */
+
+        studentController.displayAllStudents();
+
+        //WYSWIETL STUDENTA
+        System.out.println("Podaj nr indeksu studenta, ktorego chcesz wyswietlic");
+        studentIndex=scanner.nextInt();
+        studentController.displayStudent(studentIndex);
 
 
 
