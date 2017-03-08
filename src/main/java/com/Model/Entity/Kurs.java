@@ -8,7 +8,12 @@ public class Kurs {
     private int kursId;
     private String kursName;
 
+    public Kurs(){};
 
+    public Kurs(int kursId, String kursName) {
+        this.kursId = kursId;
+        this.kursName = kursName;
+    }
 
     public int getKursId() {
         return kursId;

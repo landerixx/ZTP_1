@@ -12,9 +12,9 @@ public interface KursService {
 
     public List<Kurs> getAll();
     public Kurs get(int id);
-    public void add(Kurs entity);
-    public void update(Kurs entity);
-    public void remove(Kurs entity);
+    public boolean add(Kurs entity);
+    public boolean update(Kurs entity);
+    public boolean remove(Kurs entity);
 
     public List<Integer> getAllIndexes();
 

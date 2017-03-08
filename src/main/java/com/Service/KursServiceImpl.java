@@ -37,29 +37,45 @@ public class KursServiceImpl implements KursService {
     }
 
 
-    public void add(Kurs entity) {
+    public boolean add(Kurs entity) {
 
-        if(entity!=null && !getAllIndexes().contains(entity.getKursId()))
+        boolean result=false;
+
+        if(entity!=null && !getAllIndexes().contains(entity.getKursId())){
             kursDao.addKurs(entity);
+            result=true;
+        }
+
         else
             System.err.println("Bład. Nie można dodać tego kursu do bazy");
 
+        return result;
     }
 
-    public void update(Kurs entity) {
+    public boolean update(Kurs entity) {
 
-        if(entity!=null && getAllIndexes().contains(entity.getKursId()))
+        boolean result=false;
+        if(entity!=null && getAllIndexes().contains(entity.getKursId())) {
             kursDao.updateKurs(entity);
+            result=true;
+        }
         else
             System.err.println("Błąd. W BAZIE NIE ISTNIEJE STUDENT O TAKIM ID");
+
+        return result;
     }
 
-    public void remove(Kurs entity) {
+    public boolean remove(Kurs entity) {
 
-        if(entity!=null && getAllIndexes().contains(entity.getKursId()))
+        boolean result=false;
+        if(entity!=null && getAllIndexes().contains(entity.getKursId())) {
             kursDao.deleteKurs(entity.getKursId());
+            result=true;
+        }
         else
             System.err.println("Błąd. Nie istnieje  Kurs w bazie z takim ID");
+
+        return result;
     }
 
 
