@@ -80,9 +80,12 @@ public class KursControllerImpl implements KursController {
 
     }//public boolean changeCourseName(int kursId, String newName)
 
+    public boolean displayCourseWithStudents(int kursId) {
 
+        boolean result=displayCourse(kursId);
+        return result;
 
-
+    }
 
 
 }

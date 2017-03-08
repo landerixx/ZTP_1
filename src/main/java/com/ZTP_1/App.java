@@ -263,7 +263,7 @@ public class App
       //Controllers
         KursController kursController = new KursControllerImpl(kursService,kursView);
         StudentController studentController = new StudentControllerImpl(studentService,studentView);
-        ZapisanyController zapisanyController = new ZapisanyController(zapisanyService,zapisanyView);
+        ZapisanyControllerImpl zapisanyControllerImpl = new ZapisanyControllerImpl(zapisanyService,zapisanyView);
 
 
         Scanner scanner = new Scanner(System.in);
