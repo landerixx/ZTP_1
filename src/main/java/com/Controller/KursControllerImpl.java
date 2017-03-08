@@ -108,18 +108,20 @@ public class KursControllerImpl implements KursController {
 
     public boolean displayCourseWithStudents(int kursId) {
 
-        boolean result=displayCourse(kursId);
+        boolean result=displayCourse(kursId); //jezeli false nie ma takiego kursu
 
         kursView.showCourseWithStudents();
 
-        Set<Integer> studentIDs= zapisanyService.getIds(kursId,false); //true -> wyciagniemy wszystkich studentow
+        Set<Integer> studentIDs= zapisanyService.getIds(kursId,false); //false -> wyciagniemy wszystkich studentow zapisanych na ten kurs
         Student stud;
-        System.out.println(studentIDs);
+
         for(Integer id: studentIDs) {
 
             stud = studentService.get(id);
             studentView.showStudent(id,stud.getStudentName());
         }
+        if(studentIDs.isEmpty())
+            kursView.showMessageNoStudents();
 
         return result;
 

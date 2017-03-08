@@ -39,7 +39,7 @@ public class KursView {
 
     public void showCourse(int kursId, String name){
 
-        inKursView();
+
         System.out.println("Kurs: Id kursu " + kursId + " oraz jego nazwa: " + name);
     }
 
@@ -56,6 +56,10 @@ public class KursView {
         System.out.println("Zapisani studenci na ten kurs:");
     }
 
+    public void showMessageNoStudents(){
+
+        System.out.println("->Brak studentow w tym kursie");
+    }
 
 
 

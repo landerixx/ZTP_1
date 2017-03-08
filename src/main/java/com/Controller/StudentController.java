@@ -9,5 +9,6 @@ public interface StudentController {
     public void displayAllStudents();
     public boolean displayStudent(int studentId);
     public boolean changeStudentName(int studentId, String newName);
+    public boolean displayStudentWithCourses(int studentId);
 
 }

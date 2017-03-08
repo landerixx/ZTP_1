@@ -54,5 +54,11 @@ public class StudentView {
     }
 
 
+    public void showStudentWithCourses() {
+        System.out.println("Kursy tego studenta:");
+    }
 
+    public void showMessageNoCourses() {
+        System.out.println("->Brak kursow tego studenta");
+    }
 }

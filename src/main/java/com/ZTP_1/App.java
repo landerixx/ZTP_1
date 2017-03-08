@@ -70,8 +70,8 @@ A "service layer" exists between the UI and the backend
  *     +   3. WYSWIETL KURS
  *     +   4. WYSWIETL STUDENTA
  *
- *      5. POKAZ STUDENTA wraz z jego kursami
- *      6. POKAZ KURS wraz z jego studentami
+ *     + 5. POKAZ STUDENTA wraz z jego kursami
+ *     + 6. POKAZ KURS wraz z jego studentami
  *
  *      9.WYJSCIE DO MENU GL.
  *
@@ -369,25 +369,35 @@ public class App
         //DAM FALSE USUNIETE WSZYSSCY STUDENCI KURSU
 
       //  zapisanyDao.deleteAllZapisany(3,true);
-          zapisanyService.deleteAllZapisanyStudentsFromKurs(3);
-        zapisanyService.deleteAllZapisanyCoursesFromStudent(5);
+        //zapisanyService.deleteAllZapisanyStudentsFromKurs(3);
+       // zapisanyService.deleteAllZapisanyCoursesFromStudent(5);
 
 
 
-        /*
+
         //KOLEJNY ETAP
 
         kursController=new KursControllerImpl(kursService,kursView,zapisanyService,studentService,studentView);
 
+        /*
         //WYSWIETL KURS WRAZ Z JEGO STUDENTAMI
 
         System.out.println("Podaj nr indeksu kursu, ktorego chcesz wyswietlic razem z zapisanymi studentami");
         kursIndex=scanner.nextInt();
 
-//        kursController.displayCourseWithStudents(kursIndex);
+        kursController.displayCourseWithStudents(kursIndex);
+        */
+
+        studentController = new StudentControllerImpl(studentService,studentView,zapisanyService,kursService,kursView);
+
+        //WYSWIETL STUDENTA Z JEGO KURSAMI
+
+        System.out.println("Podaj nr indeksu studenta, ktorego chcesz wyswietlic z jego kursami");
+        studentIndex=scanner.nextInt();
+
+        studentController.displayStudentWithCourses(studentIndex);
 
 
-*/
 
 
 

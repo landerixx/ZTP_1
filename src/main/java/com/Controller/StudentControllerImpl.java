@@ -1,11 +1,16 @@
 package com.Controller;
 
+import com.Model.Entity.Kurs;
 import com.Model.Entity.Student;
+import com.Service.KursService;
 import com.Service.StudentService;
+import com.Service.ZapisanyService;
+import com.View.KursView;
 import com.View.StudentView;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Piotrek on 2017-03-07.
@@ -16,12 +21,27 @@ public class StudentControllerImpl implements StudentController {
     private StudentService studentService;
     private StudentView studentView;
 
+    private ZapisanyService zapisanyService;
+    private KursService kursService;
+    private KursView kursView;
+
     public StudentControllerImpl(){};
     public StudentControllerImpl(StudentService studentService, StudentView studentView){
 
         this.studentService=studentService;
         this.studentView=studentView;
     }
+
+    public StudentControllerImpl(StudentService studentService, StudentView studentView, ZapisanyService zapisanyService,
+                                 KursService kursService, KursView kursView){
+
+        this.studentService=studentService;
+        this.studentView=studentView;
+        this.zapisanyService=zapisanyService;
+        this.kursService=kursService;
+        this.kursView=kursView;
+    }
+
 
 
 
@@ -63,7 +83,7 @@ public class StudentControllerImpl implements StudentController {
         }
 
         return result;
-    }
+    }// public boolean displayStudent(int studentId)
 
     public boolean changeStudentName(int studentId, String newName) {
 
@@ -75,6 +95,33 @@ public class StudentControllerImpl implements StudentController {
 
         return result;
 
+    }//  public boolean changeStudentName(int studentId, String newName)
+
+
+
+    //===================================================
+
+    public boolean displayStudentWithCourses(int studentId) {
+
+        boolean result=displayStudent(studentId); //jezeli false nie ma takiego studenta
+
+        studentView.showStudentWithCourses();
+
+        Set<Integer> coursesIds= zapisanyService.getIds(studentId,true); //true -> wyciagniemy wszystkich kursy tego studenta
+        Kurs kurs;
+
+        for(Integer id: coursesIds) {
+
+            kurs = kursService.get(id);
+            kursView.showCourse(id,kurs.getKursName());
+        }
+        if(coursesIds.isEmpty())
+            studentView.showMessageNoCourses();
+
+        return result;
     }
+
+
+
 
 }
