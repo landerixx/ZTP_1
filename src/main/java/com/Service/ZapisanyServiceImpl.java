@@ -4,7 +4,9 @@ import com.Model.DAO.ZapisanyDao;
 import com.Model.Entity.Zapisany;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Piotrek on 2017-03-07.
@@ -35,26 +37,39 @@ public class ZapisanyServiceImpl implements ZapisanyService  {
         return null;
     }
 
-    public void add(Zapisany entity) {
+    public boolean add(Zapisany entity) {
 
-        if(entity!=null &&!getAllIndexes().contains(new Pair<Integer>(entity.getKursId(),entity.getStudentId())))
+        boolean result=false;
+
+        if(entity!=null &&!getAllIndexes().contains(new Pair<Integer>(entity.getKursId(),entity.getStudentId()))) {
             zapisanyDao.addZapisany(entity);
+            result=true;
+        }
         else
             System.err.println("Błąd. Nie można wprowadzić tej encji Zapisany do bazy");
+
+        return result;
     }
 
 
-    public void update(Zapisany entity) {
+    public boolean update(Zapisany entity) {
         System.out.println("update zapisany, puste");
+        return false;
     }
 
 
-    public void remove(Zapisany entity) {
+    public boolean remove(Zapisany entity) {
 
-        if(entity!=null &&getAllIndexes().contains(new Pair<Integer>(entity.getKursId(),entity.getStudentId())))
-            zapisanyDao.deleteZapisany(entity.getKursId(),entity.getStudentId());
+        boolean result=false;
+
+        if(entity!=null &&getAllIndexes().contains(new Pair<Integer>(entity.getKursId(),entity.getStudentId()))) {
+            zapisanyDao.deleteZapisany(entity.getKursId(), entity.getStudentId());
+            result =true;
+        }
         else
             System.err.println("Nie istnieje  zapisany w bazie z takimi ID");
+
+        return result;
     }
 
 
@@ -71,10 +86,63 @@ public class ZapisanyServiceImpl implements ZapisanyService  {
     }
 
     public boolean deleteAllZapisanyStudent(int studentId) {
-        return false;
+        boolean result =false;
+
+        Set<Integer> studentsIdSet = getIds(true);
+
+        if(studentsIdSet.contains(studentId)){
+            zapisanyDao.deleteAllZapisany(studentId,true);
+            result=true;
+        }
+        else
+            System.err.println("Nie istnieje  Student/Zapisany w bazie z takim ID");
+        return result;
     }
 
+
     public boolean deleteAllZapisanyKurs(int kursId) {
-        return false;
+
+        boolean result =false;
+
+        Set<Integer> coursesIdSet = getIds(false);
+
+        if(coursesIdSet.contains(kursId)){
+            zapisanyDao.deleteAllZapisany(kursId,false);
+            result=true;
+        }
+        else
+            System.err.println("Nie istnieje  KURS/Zapisany w bazie z takim ID");
+        return result;
     }
+
+
+
+
+
+    /**
+     *
+     * @param whichOne True-> studentsId, kursId otherwise
+     * @return
+     */
+    private Set<Integer> getIds(boolean whichOne){
+
+        List<Pair<Integer>> zapisanyIdList=getAllIndexes();
+        Set<Integer> idSet = new HashSet<Integer>();
+        for(Pair<Integer> tuple: zapisanyIdList) {
+            if(whichOne)
+                idSet.add(tuple.p2);
+            else
+                idSet.add(tuple.p1);
+        }
+
+        return idSet;
+    }
+
+
+
+
+
+
+
+
 }

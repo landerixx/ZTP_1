@@ -60,7 +60,7 @@ public class KursServiceImpl implements KursService {
             result=true;
         }
         else
-            System.err.println("Błąd. W BAZIE NIE ISTNIEJE STUDENT O TAKIM ID");
+            System.err.println("Błąd. W BAZIE NIE ISTNIEJE KURS O TAKIM ID");
 
         return result;
     }

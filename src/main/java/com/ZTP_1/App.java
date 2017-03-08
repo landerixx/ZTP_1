@@ -43,7 +43,7 @@ A "service layer" exists between the UI and the backend
  *
  * 1.CREATE
  *      1.WPROWADZ STUDENTA
- *      2.WPROWADZ KURS
+ *   +   2.WPROWADZ KURS
  *
  *      3.ZAPIS STUDENTA NA KURS
  *
@@ -52,17 +52,20 @@ A "service layer" exists between the UI and the backend
  * 2.READ
  *
  *      1. WYSWIETL LISTE WSZYSTKICH STUDENTOW
- *      2. WYSWIETL LISTE WSZYSTKICH KURSOW
+ *    +  2. WYSWIETL LISTE WSZYSTKICH KURSOW
  *
- *      3. POKAZ STUDENTA wraz z jego kursami
- *      4. POKAZ KURS wraz z jego studentami
+ *     +   3. WYSWIETL KURS
+ *        4. WYSWIETL STUDENTA
+ *
+ *      5. POKAZ STUDENTA wraz z jego kursami
+ *      6. POKAZ KURS wraz z jego studentami
  *
  *      9.WYJSCIE DO MENU GL.
  *
  * 3.UPDATE
  *
  *      1. EDYTUJ NAZWISKO STUDENTA
- *      2. EDYTUJ NAZWE KURSU
+ *   +   2. EDYTUJ NAZWE KURSU
  *
  *      9.WYJSCIE DO MENU GL.
  *
@@ -284,6 +287,22 @@ public class App
 
         //WYSWIETL WSZYSTKIE KURSY
         kursController.displayCourses();
+
+
+        //EDYTUJ NAZWE KURSU
+        System.out.println("Podaj nr indeksu kursu, ktoremu chcesz zmienic nazwe.");
+        int kursIndex = scanner.nextInt();
+        System.out.println("Podaj nowa nazwe");
+        String newName = scanner.next();
+        kursController.changeCourseName(kursIndex,newName);
+
+
+       //WYSWIETL KURS
+        System.out.println("Podaj nr indedksu kursu, ktorego chcesz wyswietlic");
+        kursIndex=scanner.nextInt();
+        kursController.displayCourse(kursIndex);
+
+
 
 
 

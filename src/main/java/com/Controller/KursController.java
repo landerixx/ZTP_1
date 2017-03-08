@@ -1,7 +1,6 @@
 package com.Controller;
 
 import com.Model.Entity.Kurs;
-import com.Model.Entity.Student;
 import com.Service.KursService;
 import com.View.KursView;
 
@@ -24,6 +23,8 @@ public class KursController {
         this.kursView=kursView;
     }
 
+
+
    public  boolean createKurs(int kursId, String name){
 
         boolean result=false;
@@ -45,9 +46,42 @@ public class KursController {
         for(Kurs kurs: courseList)
             map.put(kurs.getKursId(),kurs.getKursName());
 
-        kursView.allCourses(map);
+        kursView.displayAllCourses(map);
 
     }//  public void displayCourses()
+
+    public boolean displayCourse(int kursId){
+
+        boolean result=false;
+
+        Kurs kurs = kursService.get(kursId);
+        if(kurs!=null){
+            result=true;
+            kursView.displayCourse(kursId,kurs.getKursName());
+
+        }
+
+        return result;
+
+    }// public void displayCourse(int kursId, String name)
+
+
+
+
+    public boolean changeCourseName(int kursId, String newName){
+
+        boolean result =false;
+        result = kursService.update(new Kurs(kursId,newName));
+
+        if(result)
+            kursView.displayUpdatedCourse(kursId,newName);
+
+        return result;
+
+    }//public boolean changeCourseName(int kursId, String newName)
+
+
+
 
 
 

@@ -15,9 +15,9 @@ public interface ZapisanyService {
 
     public List <Zapisany> getAll();
     public Zapisany get(int kursId, int studentId );
-    public void add(Zapisany entity);
-    public void update(Zapisany entity);
-    public void remove(Zapisany entity);
+    public boolean add(Zapisany entity);
+    public boolean update(Zapisany entity);
+    public boolean remove(Zapisany entity);
 
 
 

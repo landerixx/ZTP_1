@@ -142,8 +142,40 @@ public class ZapisanyDaoImpl implements ZapisanyDao {
     }//public void deleteZapisany(int kursId, int studentId)
 
 
+    /**
+     *
+     * @param ID: Student or kurs id
+     * @param whichOne: BOOLEAN, if equals to TRUE: ID=studentID, kursId otherwise
+     */
+
 
     public void deleteAllZapisany(int ID, boolean whichOne) {
 
-    }
+        String sql;
+
+        if(whichOne)
+            sql  = "delete from zapisany where studentid="+ ID;
+        else
+            sql = "delete from zapisany where kursid="+ ID;
+
+        try{
+            connection = ConnectionSingleton.getConnection();
+            statement = connection.prepareStatement(sql);
+            statement.executeUpdate(sql);
+
+            System.out.print("Records are deleted from ZAPISANY table for  ");
+            if(whichOne)
+                System.out.println("student ID: " + ID);
+            else
+                System.out.println("kurs ID: " + ID);
+        }
+        catch( SQLException e ) {
+            e.printStackTrace();
+        }
+        finally {
+            DbUtil.close(statement);
+            DbUtil.close(connection);
+        }
+
+    }//public void deleteAllZapisany(int ID, boolean whichOne)
 }
