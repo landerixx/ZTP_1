@@ -59,10 +59,11 @@ A "service layer" exists between the UI and the backend
  *   +   2.WPROWADZ KURS
  *
  *      3.ZAPIS STUDENTA NA KURS
+ *      4. Zapis STUDENTA DO KURSU
  *
  *      9.WYJSCIE DO MENU GL.
  *
- * 2.READ
+ * 2.READ +
  *
  *    + 1. WYSWIETL LISTE WSZYSTKICH STUDENTOW
  *    +  2. WYSWIETL LISTE WSZYSTKICH KURSOW
@@ -75,14 +76,14 @@ A "service layer" exists between the UI and the backend
  *
  *      9.WYJSCIE DO MENU GL.
  *
- * 3.UPDATE
+ * 3.UPDATE +
  *
  *   +   1. EDYTUJ NAZWISKO STUDENTA
  *   +   2. EDYTUJ NAZWE KURSU
  *
  *      9.WYJSCIE DO MENU GL.
  *
- * 4.DELETE -> USUWAJAC KURS LUB STUDENTA MUSZE NAJPIERW WYPISAC GO Z KURSOW WYPISAC LISTE STUDENTOW -> gdzie to zaimplementowac
+ * 4.DELETE -> USUWAJAC KURS LUB STUDENTA MUSZE NAJPIERW WYPISAC GO Z KURSOW WYPISAC LISTE STUDENTOW
  *
  *      1. USUN STUDENTA
  *      2. USUN KURS
@@ -96,6 +97,8 @@ A "service layer" exists between the UI and the backend
  *      9. WYJSCIE DO MENU GLOWNEGO
  *
  * 9.WYJSCIE Z PROGRAMU
+ *
+ *
  *
  *
  * MOZLIWA TEZ OPCJA:
@@ -390,13 +393,22 @@ public class App
 
         studentController = new StudentControllerImpl(studentService,studentView,zapisanyService,kursService,kursView);
 
+        /*
         //WYSWIETL STUDENTA Z JEGO KURSAMI
 
         System.out.println("Podaj nr indeksu studenta, ktorego chcesz wyswietlic z jego kursami");
         studentIndex=scanner.nextInt();
 
         studentController.displayStudentWithCourses(studentIndex);
+        */
 
+        //ZAPIS STUDENTA KA KURS
+
+        System.out.println("Podaj nr studenta, jakiego chcesz zapisac na kurs");
+        studentIndex=scanner.nextInt();
+        System.out.println("Podaj nr kursu");
+        kursIndex=scanner.nextInt();
+        studentController.enrollStudentforCourse(studentIndex,kursIndex);
 
 
 

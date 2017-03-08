@@ -46,7 +46,7 @@ public class ZapisanyServiceImpl implements ZapisanyService  {
             result=true;
         }
         else
-            System.err.println("Błąd. Nie można wprowadzić tej encji Zapisany do bazy");
+            System.err.println("Błąd. Nie można wprowadzić tej encji Zapisany do bazy. NULL lub zapisany istnieje juz w bazie");
 
         return result;
     }

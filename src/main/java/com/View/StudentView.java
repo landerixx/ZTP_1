@@ -61,4 +61,9 @@ public class StudentView {
     public void showMessageNoCourses() {
         System.out.println("->Brak kursow tego studenta");
     }
+
+    public void showEnroll(int studentId, String studentName, int kursId, String kursName) {
+        inStudentView();
+        System.out.println("ZAPISALES STUDENTA " + studentName+ " o ID " + studentId + " na kurs " +kursName+  " o ID " + kursId);
+    }
 }

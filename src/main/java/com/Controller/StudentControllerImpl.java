@@ -2,6 +2,7 @@ package com.Controller;
 
 import com.Model.Entity.Kurs;
 import com.Model.Entity.Student;
+import com.Model.Entity.Zapisany;
 import com.Service.KursService;
 import com.Service.StudentService;
 import com.Service.ZapisanyService;
@@ -119,9 +120,31 @@ public class StudentControllerImpl implements StudentController {
             studentView.showMessageNoCourses();
 
         return result;
+    } //  public boolean displayStudentWithCourses(int studentId)
+
+
+
+
+
+
+    public boolean enrollStudentforCourse(int studentId, int kursId) {
+
+
+        Student stud = studentService.get(studentId);
+        Kurs kurs = kursService.get(kursId);
+
+        boolean isStudent = stud !=null;
+        boolean isKurs = kurs!=null;
+        boolean result = isStudent && isKurs;
+
+        if(result) {
+            zapisanyService.add(new Zapisany(kursId, studentId));
+            studentView.showEnroll(studentId,stud.getStudentName(),kursId,kurs.getKursName());
+        }
+
+
+        return false;
     }
-
-
 
 
 }

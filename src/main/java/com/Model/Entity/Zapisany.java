@@ -8,6 +8,14 @@ public class Zapisany {
     private int kursId;
     private int studentId;
 
+    public Zapisany() {
+    }
+
+    public Zapisany(int kursId, int studentId) {
+        this.kursId = kursId;
+        this.studentId = studentId;
+    }
+
     public int getStudentId() {
         return studentId;
     }

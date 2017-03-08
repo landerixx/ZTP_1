@@ -10,5 +10,6 @@ public interface StudentController {
     public boolean displayStudent(int studentId);
     public boolean changeStudentName(int studentId, String newName);
     public boolean displayStudentWithCourses(int studentId);
+    public boolean enrollStudentforCourse(int studentId, int kursId);
 
 }
