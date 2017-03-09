@@ -56,7 +56,7 @@ public class KursControllerImpl implements KursController {
         int kursIndex;
        kursView.showPromptMessageForKursIndex();
         kursIndex=scanner.nextInt();
-        scanner.close();
+      //  scanner.close();
         return kursIndex;
 
     }
@@ -67,7 +67,7 @@ public class KursControllerImpl implements KursController {
         String kursName;
        kursView.showPromptMessageForKursName();
         kursName = scanner.next();
-        scanner.close();
+     //   scanner.close();
         return kursName;
     }
 

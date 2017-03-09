@@ -11,10 +11,11 @@ public class KursView {
 
     private void inKursView(){
 
+        /*
         System.out.println("            ============");
         System.out.println("            ==KursView==");
         System.out.println("            ============");
-
+        */
     }
 
 
@@ -79,5 +80,13 @@ public class KursView {
     public void removeCourseNegativeMessage(int kursId, String kursName) {
 
         System.out.println("Kurs o id: " +kursId + " i nazwie "+ kursName + " nie moze zostac usuniety z bazy. Sa zapisani na niego studenci");
+    }
+
+    public void showPromptMessageForKursIndex() {
+        System.out.println("Podaj nr indeksu kursu");
+    }
+
+    public void showPromptMessageForKursName() {
+        System.out.println("Podaj nazwe kursu");
     }
 }//public class KursView

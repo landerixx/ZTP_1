@@ -9,11 +9,11 @@ import java.util.Map;
 public class StudentView {
 
     private void inStudentView(){
-
+/*
         System.out.println("            +++++++++++++++");
         System.out.println("            ++StudentVIEW++");
         System.out.println("            +++++++++++++++");
-
+*/
     }
 
 
@@ -85,5 +85,14 @@ public class StudentView {
     public void removeStudentNegativeMessage(int studentId, String studentName){
 
         System.out.println("Student o id: " +studentId + " i nazwie "+ studentName + " nie moze zostac usuniety z bazy. Jest zapisany na kursy");
+    }
+
+    public  void showPromptMessageForStudentIndex() {
+        System.out.println("Podaj nr indeksu studenta");
+    }
+
+
+    public void showPromptMessageForStudentName() {
+        System.out.println("Podaj nazwe studenta");
     }
 }

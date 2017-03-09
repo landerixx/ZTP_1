@@ -16,4 +16,7 @@ public interface StudentController {
     public boolean removeFromAllCourses(int studentId);
     public boolean removeStudent(int studentId);
 
+    public int promptForStudentIndex();
+    public String promptForStudentName();
+
 }

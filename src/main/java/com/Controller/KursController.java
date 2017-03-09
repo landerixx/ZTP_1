@@ -15,4 +15,7 @@ public interface KursController {
     public boolean cancelAllStudents(int kursId);
     public boolean removeCourse(int kursId);
 
+    public int promptForKursIndex();
+    public String promptForKursName();
+
 }

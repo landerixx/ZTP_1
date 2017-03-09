@@ -11,6 +11,7 @@ import com.View.StudentView;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Scanner;
 import java.util.Set;
 
 /**
@@ -25,6 +26,8 @@ public class StudentControllerImpl implements StudentController {
     private ZapisanyService zapisanyService;
     private KursService kursService;
     private KursView kursView;
+
+    private Scanner scanner;
 
     public StudentControllerImpl(){};
     public StudentControllerImpl(StudentService studentService, StudentView studentView){
@@ -42,6 +45,34 @@ public class StudentControllerImpl implements StudentController {
         this.kursService=kursService;
         this.kursView=kursView;
     }
+
+
+    public int promptForStudentIndex(){
+
+        scanner= new Scanner(System.in);
+        int studentIndex;
+        studentView.showPromptMessageForStudentIndex();
+        studentIndex=scanner.nextInt();
+      //  scanner.close();
+        return studentIndex;
+
+    }
+
+    public String promptForStudentName(){
+
+        scanner= new Scanner(System.in);
+        String studentName;
+        studentView.showPromptMessageForStudentName();
+
+        studentName = scanner.next();
+       // scanner.close();
+        return studentName;
+    }
+
+
+
+
+
 
 
 
