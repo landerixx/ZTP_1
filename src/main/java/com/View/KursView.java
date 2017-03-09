@@ -62,5 +62,22 @@ public class KursView {
     }
 
 
+    public void cancelStudentMessage(int studentId, String studentName, int kursId, String kursName) {
+        System.out.println("Z kursu o ID " + kursId + " o nazwie " + kursName + " zostal wypisany student: " + studentName + " o id " + studentId);
 
+    }
+
+    public void removeFromAllCoursesMessage(int kursId, String kursName) {
+        System.out.println("Kurs o id: " +kursId + " i nazwie "+ kursName + ", wszyscy studenci zostali z niego wypisani");
+    }
+
+    public void removeCoursePositiveMessage(int kursId, String kursName) {
+
+        System.out.println("Kurs o id: " +kursId + " i nazwie "+ kursName + " zostal usuniety z bazy");
+    }
+
+    public void removeCourseNegativeMessage(int kursId, String kursName) {
+
+        System.out.println("Kurs o id: " +kursId + " i nazwie "+ kursName + " nie moze zostac usuniety z bazy. Sa zapisani na niego studenci");
+    }
 }//public class KursView

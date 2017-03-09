@@ -138,7 +138,8 @@ public class StudentControllerImpl implements StudentController {
         boolean result = isStudent && isKurs;
 
         if(result) {
-            zapisanyService.add(new Zapisany(kursId, studentId));
+           boolean isEnrolled= zapisanyService.add(new Zapisany(kursId, studentId));
+           if(isEnrolled)
             studentView.showEnroll(studentId,stud.getStudentName(),kursId,kurs.getKursName());
         }
 
@@ -151,17 +152,75 @@ public class StudentControllerImpl implements StudentController {
     //===================================================
 
 
-    public boolean unrollFromCourse(int studentId, int kursId) {
-        return false;
-    }
+    public boolean removeFromCourse(int studentId, int kursId) {
 
-    public boolean unrollFromAllCourses(int studentId) {
-        return false;
-    }
+        boolean result=false;
+
+        Student stud = studentService.get(studentId);
+        Kurs kurs = kursService.get(kursId);
+
+
+        result=zapisanyService.remove(new Zapisany(kursId,studentId));
+
+        if(result)
+            studentView.showRemoveFromCourseMessage(studentId, stud.getStudentName(),kursId, kurs.getKursName());
+
+
+        return result;
+    }// public boolean removeFromCourse(int studentId, int kursId)
+
+
+
+    public boolean removeFromAllCourses(int studentId) {
+
+        boolean result =false;
+
+        Student stud = studentService.get(studentId);
+        boolean isStudent = stud !=null;
+
+        Set<Integer> coursesIds;
+        if(isStudent) {
+            coursesIds = zapisanyService.getIds(studentId, true); //true -> wyciagniemy wszystkie kursy tego studenta
+            for(Integer kursId: coursesIds)
+                zapisanyService.remove(new Zapisany(kursId,studentId));
+
+            result = true;
+            studentView.removeFromAllCoursesMessage(studentId,stud.getStudentName());
+        }
+
+        return result;
+    }// public boolean removeFromAllCourses(int studentId)
+
+
 
     public boolean removeStudent(int studentId) {
-        return false;
-    }
+
+        boolean result=false;
+
+        Student stud = studentService.get(studentId);
+        boolean isStudent = stud !=null;
+        Set<Integer> coursesIds;
+        if(isStudent){
+
+            coursesIds = zapisanyService.getIds(studentId, true); //true -> wyciagniemy wszystkie kursy tego studenta
+
+            //jaka strategia -> usuwamy zapisy na kursy, czy powiadamiamy uzytkownika, ze jest zapisany na kurs
+            //narazie tylko powiadamiam
+
+
+            if(coursesIds.isEmpty()) {
+                studentService.remove(stud);
+                studentView.removeStudentPositiveMessage(studentId, stud.getStudentName());
+                result=true;
+
+            }
+            else
+                studentView.removeStudentNegativeMessage(studentId, stud.getStudentName());
+        }
+
+
+        return result;
+    }// public boolean removeStudent(int studentId)
 
 
 }

@@ -53,6 +53,8 @@ A "service layer" exists between the UI and the backend
  *
  *
  *
+ * W KONTROLERACH SCANNER!!!!!!!!!!!!!
+ *
  *
  * 1.CREATE +
  *   +   1.WPROWADZ STUDENTA
@@ -83,16 +85,16 @@ A "service layer" exists between the UI and the backend
  *
  *      9.WYJSCIE DO MENU GL.
  *
- * 4.DELETE -> USUWAJAC KURS LUB STUDENTA MUSZE NAJPIERW WYPISAC GO Z KURSOW WYPISAC LISTE STUDENTOW
+ * 4.DELETE  +                    -> USUWAJAC KURS LUB STUDENTA MUSZE NAJPIERW WYPISAC GO Z KURSOW WYPISAC LISTE STUDENTOW
  *
- *      1. USUN STUDENTA
- *      2. USUN KURS
+ *      1. USUN STUDENTA +
+ *      2. USUN KURS +
  *
- *      3. WYPISZ STUDENTA Z KURSU (STUDENT)
- *      4. ANULUJ STUDENTOWI KURS (KURS)
+ *  +   3. WYPISZ STUDENTA Z KURSU (STUDENT) +
+ *      4. ANULUJ STUDENTOWI KURS (KURS) +
  *
- *      WAZNE 5. USUN WSZYSTKICH Z KURSU
- *      WAZNE 6. USUN WZYSTKIE KURSY STUDENTA
+ *      WAZNE 5. USUN WSZYSTKICH Z KURSU +
+ *      WAZNE 6. USUN WZYSTKIE KURSY STUDENTA +
  *
  *      9. WYJSCIE DO MENU GLOWNEGO
  *
@@ -106,12 +108,14 @@ A "service layer" exists between the UI and the backend
  *      POKAZ JEGO DANE
  *      POKAZ STUDENTOW
  *      EDYTUJ KURS
+ *      USUN STUDENTA Z KURSU
  *      USUN KURS (WYPISZ STUDENTOW Z KURSU A POTEM DOPIERO USUN KURS)
  *
  * JESTEM W STUDENCIE:
  *      POKAZ JEGO DANE
  *      POKAZ KURSY
  *      EDYTUJ STUDENTA
+ *      USUN KURS STUDENTOWI
  *      USUN STUDENTA (ANULUJ KURSY A POTEM DOPIERO USUN STUDENTA)
  *
  *
@@ -404,16 +408,65 @@ public class App
 
         //ZAPIS STUDENTA KA KURS
 
+        /*
         System.out.println("Podaj nr studenta, jakiego chcesz zapisac na kurs");
         studentIndex=scanner.nextInt();
         System.out.println("Podaj nr kursu");
         kursIndex=scanner.nextInt();
         studentController.enrollStudentforCourse(studentIndex,kursIndex);
+        */
 
 
+        //USUWAMY Kurs STUDENTA
+
+        /*
+        System.out.println("Podaj nr studenta, jakiego chcesz wypisac z kursu");
+        studentIndex=scanner.nextInt();
+        System.out.println("Podaj nr kursu z jakiego chcesz go wypisac");
+        kursIndex=scanner.nextInt();
+        studentController.removeFromCourse(studentIndex,kursIndex);
+
+        */
+
+        //USUWAMY studenta z kursu
+
+/*
+        System.out.println("Podaj id kursu z ktorego chcesz wypisac studenta");
+        kursIndex=scanner.nextInt();
+        System.out.println("Podaj id studenta");
+        studentIndex=scanner.nextInt();
+        kursController.cancelStudent(kursIndex,studentIndex);
+*/
+
+        //USUWAMY WSZYSTKIE KURSY STUDENTA
+
+        /*
+        System.out.println("Podaj nr studenta, jakiego chcesz wypisac z wszystkich kursow");
+        studentIndex=scanner.nextInt();
+        //studentController.removeFromAllCourses(studentIndex);
+        */
+
+        /*
+    //USUWAMY WSZYSTKICH STUDENTOW Z KURSU
+        System.out.println("Podaj id kursu z ktorego chcesz wypisac wszystkich studentow");
+        kursIndex=scanner.nextInt();
+        kursController.cancelAllStudents(kursIndex);
+        */
 
 
+        /*
+      //USUWAMY STUDENTA Z BAZY!!
 
+        System.out.println("Podaj nr studenta, jakiego chcesz usunac z bazy");
+        studentIndex=scanner.nextInt();
+        studentController.removeStudent(studentIndex);
+        */
+
+        //USUWAMY KURS Z BAZY!!
+
+        System.out.println("Podaj id kursu z ktorego chcesz wypisac studenta");
+        kursIndex=scanner.nextInt();
+        kursController.removeCourse(kursIndex);
 
         scanner.close();
 

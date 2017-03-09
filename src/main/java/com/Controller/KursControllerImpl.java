@@ -2,6 +2,7 @@ package com.Controller;
 
 import com.Model.Entity.Kurs;
 import com.Model.Entity.Student;
+import com.Model.Entity.Zapisany;
 import com.Service.KursService;
 import com.Service.StudentService;
 import com.Service.ZapisanyService;
@@ -132,16 +133,76 @@ public class KursControllerImpl implements KursController {
 
     //=================================================
 
-    public boolean cancelStudent(int kursId, int StudentId) {
-        return false;
+    public boolean cancelStudent(int kursId, int studentId) {
+
+
+        boolean result=false;
+
+        Student stud = studentService.get(studentId);
+        Kurs kurs = kursService.get(kursId);
+
+
+        result=zapisanyService.remove(new Zapisany(kursId,studentId));
+
+        if(result)
+           kursView.cancelStudentMessage(studentId, stud.getStudentName(),kursId, kurs.getKursName());
+
+
+        return result;
+
     }
 
     public boolean cancelAllStudents(int kursId) {
-        return false;
+
+        boolean result = false;
+
+        Kurs kurs = kursService.get(kursId);
+        boolean isKurs = kurs !=null;
+
+        Set<Integer> studentsIds;
+        if(isKurs) {
+            studentsIds = zapisanyService.getIds(kursId, false); //false -> wyciagniemy wszystkich studentow tego kursu
+            for(Integer studentId: studentsIds)
+                zapisanyService.remove(new Zapisany(kursId,studentId));
+
+            result = true;
+            kursView.removeFromAllCoursesMessage(kursId,kurs.getKursName());
+        }
+
+
+
+        return result;
+
     }
 
     public boolean removeCourse(int kursId) {
-        return false;
+
+        boolean result = false;
+
+        Kurs kurs = kursService.get(kursId);
+        boolean isKurs = kurs !=null;
+
+
+        Set<Integer> studentsIds;
+        if(isKurs) {
+            studentsIds = zapisanyService.getIds(kursId, false); //false -> wyciagniemy wszystkich studentow tego kursu
+
+
+            //jaka strategia -> usuwamy zapisy ze srtudentami, czy powiadamiamy uzytkownika, ze sa zapisani studenci na kurs
+            //narazie tylko powiadamiam
+
+
+            if(studentsIds.isEmpty()) {
+                kursService.remove(kurs);
+               kursView.removeCoursePositiveMessage(kursId, kurs.getKursName());
+                result=true;
+
+            }
+            else
+                kursView.removeCourseNegativeMessage(kursId, kurs.getKursName());
+        }
+
+        return result;
     }
 
 

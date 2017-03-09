@@ -128,8 +128,9 @@ public class ZapisanyServiceImpl implements ZapisanyService  {
      *INDEKSY WSZYSTKICH STUDENTOW zapisanych na KURS o indeksie ID  GDY FALSE
      * LUB
      * INDEKSY WSZYSTKICH KURSOW na ktore zapisal sie STUDENT o indeksie ID GDY TRUE
-     * @param whichOne True-> studentsId, kursId otherwise
-     * @return
+     *
+     * @param whichOne True-> studentId, kursId otherwise
+     * @return set of indexes: when whichOne is True Then courses indexes, student indexes othwerwise
      */
     public Set<Integer> getIds(int ID,boolean whichOne){
 

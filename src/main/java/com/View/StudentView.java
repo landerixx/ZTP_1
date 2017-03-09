@@ -66,4 +66,24 @@ public class StudentView {
         inStudentView();
         System.out.println("ZAPISALES STUDENTA " + studentName+ " o ID " + studentId + " na kurs " +kursName+  " o ID " + kursId);
     }
+
+    public void showRemoveFromCourseMessage(int studentId, String studentName, int kursId, String kursName) {
+
+        System.out.println("STUDENT " + studentId + " o nazwie " + studentName + " zostal wypisany z kursu: " + kursName);
+    }
+
+    public void removeFromAllCoursesMessage(int studentId, String studentName) {
+
+        System.out.println("Student o id: " +studentId + " i nazwie "+ studentName + " zostal wypisany z wszystkich kursow");
+    }
+
+    public void removeStudentPositiveMessage(int studentId, String studentName) {
+
+        System.out.println("Student o id: " +studentId + " i nazwie "+ studentName + " zostal usuniety z bazy");
+    }
+
+    public void removeStudentNegativeMessage(int studentId, String studentName){
+
+        System.out.println("Student o id: " +studentId + " i nazwie "+ studentName + " nie moze zostac usuniety z bazy. Jest zapisany na kursy");
+    }
 }
