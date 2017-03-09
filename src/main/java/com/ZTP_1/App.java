@@ -19,118 +19,14 @@ A "service layer" exists between the UI and the backend
 
 */
 
-/**
- * Hello world!
- *
- *
- * ZAPISANY -> 2 klucze glowne typu int? czy Student/Kurs
- *
- *ZAPISANY -> MOZNA DODAWAC KLUCZE, KTORE NIE ISTNIEJA W STUDENCI/KURS
- *
- *
- * UWAGA NA NULL POINTER EXCEPTION W SERVISACH PRZY ENCJACH JAKO PARAMETR +
- * UWAGA NA NULL POINTER EXCEPTION W DAO'S PRZY OBIEKTACH -> zabezpieczone w serwisach
- *
- *
- * ZMIENIC VOID NA BOOL W SERWISACH, BEDZIE LATWIEJ W KOTROLERACH
- *
- *
- *
- *
- *
- *
- * 3 drogi:
- * ALBO
- *  STWORZYC DELETE W ZAPISYCONTROLLER ORAZ wyswietlanie studenta i jego kursow/ kursu i jego studentow
- *
- * ALBO
- *  DODAC do KursController: ZapisanyService oraz StudentController
- *  TWORZYC DEDLETE I METODY W ODOPOWIEDNICH KONTROLERACH
- *
- * ALBO
- *  DODAC DO KursController: ZapisanyService, StudentService i StudentView -> wybieram to
- *
- *
- *
- *
- * W KONTROLERACH SCANNER!!!!!!!!!!!!!
- *
- *
- * 1.CREATE +
- *   +   1.WPROWADZ STUDENTA
- *   +   2.WPROWADZ KURS
- *
- *    + 3.ZAPIS STUDENTA NA KURS
- *
- *
- *      9.WYJSCIE DO MENU GL.
- *
- * 2.READ +
- *
- *    + 1. WYSWIETL LISTE WSZYSTKICH STUDENTOW
- *    +  2. WYSWIETL LISTE WSZYSTKICH KURSOW
- *
- *     +   3. WYSWIETL KURS
- *     +   4. WYSWIETL STUDENTA
- *
- *     + 5. POKAZ STUDENTA wraz z jego kursami
- *     + 6. POKAZ KURS wraz z jego studentami
- *
- *      9.WYJSCIE DO MENU GL.
- *
- * 3.UPDATE +
- *
- *   +   1. EDYTUJ NAZWISKO STUDENTA
- *   +   2. EDYTUJ NAZWE KURSU
- *
- *      9.WYJSCIE DO MENU GL.
- *
- * 4.DELETE  +                    -> USUWAJAC KURS LUB STUDENTA MUSZE NAJPIERW WYPISAC GO Z KURSOW WYPISAC LISTE STUDENTOW
- *
- *      1. USUN STUDENTA +
- *      2. USUN KURS +
- *
- *  +   3. WYPISZ STUDENTA Z KURSU (STUDENT) +
- *      4. ANULUJ STUDENTOWI KURS (KURS) +
- *
- *      WAZNE 5. USUN WSZYSTKICH Z KURSU +
- *      WAZNE 6. USUN WZYSTKIE KURSY STUDENTA +
- *
- *      9. WYJSCIE DO MENU GLOWNEGO
- *
- * 9.WYJSCIE Z PROGRAMU
- *
- *
- *
- *
- * MOZLIWA TEZ OPCJA:
- * JESTEM W KURSIE:
- *      POKAZ JEGO DANE
- *      POKAZ STUDENTOW
- *      EDYTUJ KURS
- *      USUN STUDENTA Z KURSU
- *      USUN KURS (WYPISZ STUDENTOW Z KURSU A POTEM DOPIERO USUN KURS)
- *
- * JESTEM W STUDENCIE:
- *      POKAZ JEGO DANE
- *      POKAZ KURSY
- *      EDYTUJ STUDENTA
- *      USUN KURS STUDENTOWI
- *      USUN STUDENTA (ANULUJ KURSY A POTEM DOPIERO USUN STUDENTA)
- *
- *
- *
- */
+
 
 public class App 
 {
     public static void main( String[] args ) {
+
         System.out.println( "Hello World!" );
-
-
         application();
-
-
 
     }
 
