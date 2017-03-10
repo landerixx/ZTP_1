@@ -1,9 +1,12 @@
 package com.ZTP_1;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import com.Controller.*;
 import com.Model.DAO.*;
+import com.Model.Entity.Kurs;
 import com.Service.*;
 import com.View.AppView;
 import com.View.KursView;
@@ -26,7 +29,24 @@ public class App
     public static void main( String[] args ) {
 
         System.out.println( "Hello World!" );
-        application();
+        //application();
+
+        KursDaoXML kursDao =new  KursDaoXML();
+        //kursDao.addKurs(new Kurs(5,"dupa4"));
+        kursDao.deleteKurs(3);
+
+        List<Kurs> kursy = kursDao.getAllCourses();
+        for(Kurs k:kursy)
+            System.out.println(k);
+
+
+
+
+
+
+
+
+
 
     }
 
