@@ -7,6 +7,8 @@ import java.util.Scanner;
 import com.Controller.*;
 import com.Model.DAO.*;
 import com.Model.Entity.Kurs;
+import com.Model.Entity.Student;
+import com.Model.Entity.Zapisany;
 import com.Service.*;
 import com.View.AppView;
 import com.View.KursView;
@@ -31,6 +33,7 @@ public class App
         System.out.println( "Hello World!" );
         //application();
 
+        /*
         KursDaoXML kursDao =new  KursDaoXML();
         //kursDao.addKurs(new Kurs(5,"dupa4"));
         kursDao.deleteKurs(3);
@@ -38,16 +41,46 @@ public class App
         List<Kurs> kursy = kursDao.getAllCourses();
         for(Kurs k:kursy)
             System.out.println(k);
+       */
+
+        /*
+
+        StudentDao studentDao = new StudentDaoXML();
+        //studentDao.addStudent(new Student(162, "adamefranek"));
+        Student st=studentDao.getStudent(162);
+        System.out.println(st);
+        List<Student> lista = studentDao.getAllStudents();
+        System.out.println( lista);
+
+        st.setStudentName("poprawiony");
+        studentDao.updateStudent(st);
+
+        lista = studentDao.getAllStudents();
+        System.out.println( lista);
+
+        studentDao.deleteStudent(12);
+
+        lista = studentDao.getAllStudents();
+        System.out.println( lista);
+
+*/
+
+
+        ZapisanyDao zapisanyDao = new ZapisanyDaoXML();
+       // zapisanyDao.addZapisany(new Zapisany(5001,45));
+        Zapisany zap = zapisanyDao.getZapisany(1,6);
+        System.out.println(zap);
+        List<Zapisany> listaz = zapisanyDao.getAllZapisany();
+        System.out.println(listaz);
+
+       // zapisanyDao.deleteZapisany(2,2);
 
 
 
+        zapisanyDao.deleteAllZapisany(45,true);
 
-
-
-
-
-
-
+        listaz = zapisanyDao.getAllZapisany();
+        System.out.println(listaz);
     }
 
 

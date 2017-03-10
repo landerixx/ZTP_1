@@ -1,13 +1,20 @@
 package com.Model.DAO;
 
 import com.Model.Entity.Kurs;
+import com.Model.Entity.Student;
 import com.Model.TransformerXML;
-import org.w3c.dom.*;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.*;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.xpath.*;
@@ -19,11 +26,13 @@ import java.util.List;
 /**
  * Created by Piotrek on 2017-03-10.
  */
-public class KursDaoXML implements KursDao {
-
-    String filePathString = "kursy.xml";
+public class StudentDaoXML implements StudentDao{
 
 
+    String filePathString = "studenci.xml";
+
+
+    TransformerXML transformerXML;
     Transformer transformer;
     DocumentBuilderFactory docFactory;
     DocumentBuilder docBuilder;
@@ -31,15 +40,10 @@ public class KursDaoXML implements KursDao {
     DOMSource source;
     StreamResult result;
 
-    TransformerXML transformerXML;
 
+    public List<Student> getAllStudents() {
 
-
-
-
-    public List<Kurs> getAllCourses() {
-
-        List<Kurs> kursy = new ArrayList<Kurs>();
+        List<Student> studenci = new ArrayList<Student>();
 
         File fXmlFile = new File(filePathString);
         docFactory = DocumentBuilderFactory.newInstance();
@@ -48,14 +52,14 @@ public class KursDaoXML implements KursDao {
             docBuilder = docFactory.newDocumentBuilder();
             doc = docBuilder.parse(fXmlFile);
 
-            NodeList nodes = doc.getElementsByTagName("kurs");
+            NodeList nodes = doc.getElementsByTagName("student");
             for (int i = 0; i < nodes.getLength(); i++) {
 
                 Node node = nodes.item(i);
                 Element eElement = (Element) node;
-                int kursId = Integer.parseInt(eElement.getElementsByTagName("kursId").item(0).getTextContent());
-                String kursName = eElement.getElementsByTagName("kursName").item(0).getTextContent();
-                kursy.add(new Kurs(kursId, kursName));
+                int studentId = Integer.parseInt(eElement.getElementsByTagName("studentId").item(0).getTextContent());
+                String studentName = eElement.getElementsByTagName("studentName").item(0).getTextContent();
+                studenci.add(new Student(studentId, studentName));
 
 
             }//  for (int i = 0; i < nodes.getLength(); i++)
@@ -70,16 +74,16 @@ public class KursDaoXML implements KursDao {
         }
 
 
-        return kursy;
-    }// public List<Kurs> getAllCourses()
+        return studenci;
+    }// public List<Student> getAllStudents()
 
+    public void addStudent(Student student) {
 
-    public void addKurs(Kurs kurs) {
 
         transformerXML= new TransformerXML();
         File file = new File(filePathString);
         if (!(file.exists() && !file.isDirectory())) {
-            transformerXML.makeFile(filePathString,"courses");
+            transformerXML.makeFile(filePathString,"students");
         }
 
 
@@ -92,19 +96,19 @@ public class KursDaoXML implements KursDao {
             Element nList = doc.getDocumentElement();
 
             //root a kurs
-            Element newKurs = doc.createElement("kurs");
+            Element newStudent = doc.createElement("student");
 
             //kurs id
-            Element kursId = doc.createElement("kursId");
-            kursId.appendChild(doc.createTextNode(Integer.toString(kurs.getKursId())));
-            newKurs.appendChild(kursId);
+            Element studentId = doc.createElement("studentId");
+            studentId.appendChild(doc.createTextNode(Integer.toString(student.getStudentId())));
+            newStudent.appendChild(studentId);
 
             //kursname element
-            Element kursname = doc.createElement("kursName");
-            kursname.appendChild(doc.createTextNode(kurs.getKursName()));
-            newKurs.appendChild(kursname);
+            Element studentName = doc.createElement("studentName");
+            studentName.appendChild(doc.createTextNode(student.getStudentName()));
+            newStudent.appendChild(studentName);
 
-            nList.appendChild(newKurs);
+            nList.appendChild(newStudent);
 
             transformer = TransformerXML.preparedTransformerInstance();
             result = new StreamResult(file);
@@ -124,11 +128,9 @@ public class KursDaoXML implements KursDao {
         }
 
 
-    }// public void addKurs(Kurs kurs)
+    }// public void addStudent(Student student)
 
-
-    public Kurs getKurs(int KursId) {
-
+    public Student getStudent(int studentId) {
 
         File fXmlFile = new File(filePathString);
         docFactory = DocumentBuilderFactory.newInstance();
@@ -142,16 +144,16 @@ public class KursDaoXML implements KursDao {
 
             // This XPath query will give you a list of only those <staff> elements
             // which contain a <salary>200000</salary> element
-            XPathExpression expr = xpath.compile("/courses/kurs/kursId[text()=" + Integer.toString(KursId) + "]/..");
+            XPathExpression expr = xpath.compile("/students/student/studentId[text()=" + Integer.toString(studentId) + "]/..");
 
             NodeList result = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
             NodeList nodes = (NodeList) result;
             Element eElement = (Element) nodes.item(0);
 
 
-            String kursName = eElement.getElementsByTagName("kursName").item(0).getTextContent();
+            String studentName = eElement.getElementsByTagName("studentName").item(0).getTextContent();
 
-            return new Kurs(KursId, kursName);
+            return new Student(studentId, studentName);
 
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
@@ -165,10 +167,10 @@ public class KursDaoXML implements KursDao {
 
 
         return null;
-    }//public Kurs getKurs(int KursId)
 
+    }// public Student getStudent(int studentId)
 
-    public void updateKurs(Kurs kurs) {
+    public void updateStudent(Student student) {
 
         File fXmlFile = new File(filePathString);
         docFactory = DocumentBuilderFactory.newInstance();
@@ -178,27 +180,26 @@ public class KursDaoXML implements KursDao {
             doc = docBuilder.parse(fXmlFile);
 
 
-            NodeList nodes = doc.getElementsByTagName("kurs");
-            System.out.println(nodes.getLength());
+            NodeList nodes = doc.getElementsByTagName("student");
+
             for (int i = 0; i < nodes.getLength(); i++) {
 
-                Node kursNode = nodes.item(i);
-                Element eElement = (Element) kursNode;
-                int kursId = Integer.parseInt(eElement.getElementsByTagName("kursId").item(0).getTextContent());
+                Node studentNode = nodes.item(i);
+                Element eElement = (Element) studentNode;
+                int kursId = Integer.parseInt(eElement.getElementsByTagName("studentId").item(0).getTextContent());
 
 
-                NodeList list = kursNode.getChildNodes();
-                System.out.println(list.getLength());
+                NodeList list = studentNode.getChildNodes();
 
-                if (kursId == kurs.getKursId()) {
+                if (kursId == student.getStudentId()) {
 
                     for (int j = 0; i < list.getLength(); i++) {
 
                         Node nodek = list.item(i);
 
                         // get the salary element, and update the value
-                        if ("kursName".equals(nodek.getNodeName())) {
-                            nodek.setTextContent(kurs.getKursName());
+                        if ("studentName".equals(nodek.getNodeName())) {
+                            nodek.setTextContent(student.getStudentName());
                             break;
 
                         }
@@ -228,13 +229,9 @@ public class KursDaoXML implements KursDao {
             e.printStackTrace();
         }
 
+    }// public void updateStudent(Student student) {
 
-    }// public void updateKurs(Kurs kurs)
-
-
-    //http://stackoverflow.com/questions/7029427/java-xml-remove-item
-
-    public void deleteKurs(int KursId) {
+    public void deleteStudent(int studentId) {
 
         File fXmlFile = new File(filePathString);
         docFactory = DocumentBuilderFactory.newInstance();
@@ -244,17 +241,16 @@ public class KursDaoXML implements KursDao {
             Document doc = docBuilder.parse(fXmlFile);
 
 
-            NodeList nodes = doc.getElementsByTagName("kurs");
+            NodeList nodes = doc.getElementsByTagName("student");
 
             for (int i = 0; i < nodes.getLength(); i++) {
-                Element kurs = (Element) nodes.item(i);
-                Element kursIdEl = (Element) kurs.getElementsByTagName("kursId").item(0);
-                int kursId = Integer.parseInt(kursIdEl.getTextContent());
-                if (kursId == KursId)
-                    kurs.getParentNode().removeChild(kurs);
+                Element student = (Element) nodes.item(i);
+                Element studentIdEl = (Element) student.getElementsByTagName("studentId").item(0);
+                int studId = Integer.parseInt(studentIdEl.getTextContent());
+                if (studId == studentId)
+                    student.getParentNode().removeChild(student);
 
             }
-
 
             //DELETE EMPTY LINES AFTER DELETE
             XPath xp = XPathFactory.newInstance().newXPath();
@@ -264,7 +260,6 @@ public class KursDaoXML implements KursDao {
                 Node node = nl.item(i);
                 node.getParentNode().removeChild(node);
             }
-
 
             // write the content into xml file
             transformer = TransformerXML.preparedTransformerInstance();
@@ -286,5 +281,5 @@ public class KursDaoXML implements KursDao {
         }
 
 
-    }// public void deleteKurs(int KursId) {
+    }// public void deleteStudent(int studentId)
 }
