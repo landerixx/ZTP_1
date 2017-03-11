@@ -31,56 +31,10 @@ public class App
     public static void main( String[] args ) {
 
         System.out.println( "Hello World!" );
-        //application();
-
-        /*
-        KursDaoXML kursDao =new  KursDaoXML();
-        //kursDao.addKurs(new Kurs(5,"dupa4"));
-        kursDao.deleteKurs(3);
-
-        List<Kurs> kursy = kursDao.getAllCourses();
-        for(Kurs k:kursy)
-            System.out.println(k);
-       */
-
-        /*
-
-        StudentDao studentDao = new StudentDaoXML();
-        //studentDao.addStudent(new Student(162, "adamefranek"));
-        Student st=studentDao.getStudent(162);
-        System.out.println(st);
-        List<Student> lista = studentDao.getAllStudents();
-        System.out.println( lista);
-
-        st.setStudentName("poprawiony");
-        studentDao.updateStudent(st);
-
-        lista = studentDao.getAllStudents();
-        System.out.println( lista);
-
-        studentDao.deleteStudent(12);
-
-        lista = studentDao.getAllStudents();
-        System.out.println( lista);
-
-*/
-
-
-        ZapisanyDao zapisanyDao = new ZapisanyDaoXML();
-       // zapisanyDao.addZapisany(new Zapisany(5001,45));
-        Zapisany zap = zapisanyDao.getZapisany(1,6);
-        System.out.println(zap);
-        List<Zapisany> listaz = zapisanyDao.getAllZapisany();
-        System.out.println(listaz);
-
-       // zapisanyDao.deleteZapisany(2,2);
+        application();
 
 
 
-        zapisanyDao.deleteAllZapisany(45,true);
-
-        listaz = zapisanyDao.getAllZapisany();
-        System.out.println(listaz);
     }
 
 
@@ -97,10 +51,19 @@ public class App
         StudentDao studentDao = new StudentDaoImpl();
         ZapisanyDao zapisanyDao = new ZapisanyDaoImpl();
 
+        KursDao kursDaoXML = new KursDaoXML();
+        StudentDao studentDaoXML = new StudentDaoXML();
+        ZapisanyDao zapisanyDaoXML = new ZapisanyDaoXML();
+
      //SERVICES
         KursService kursService = new KursServiceImpl(kursDao);
         StudentService studentService = new StudentServiceImpl(studentDao);
         ZapisanyService zapisanyService = new ZapisanyServiceImpl(zapisanyDao);
+
+        KursService kursServiceXML = new KursServiceImpl(kursDaoXML);
+        StudentService studentServiceXML = new StudentServiceImpl(studentDaoXML);
+        ZapisanyService zapisanyServiceXML = new ZapisanyServiceImpl(zapisanyDaoXML);
+
 
      //Views
         KursView kursView = new KursView();
@@ -115,7 +78,13 @@ public class App
 
         kursController=new KursControllerImpl(kursService,kursView,zapisanyService,studentService,studentView);
         studentController = new StudentControllerImpl(studentService,studentView,zapisanyService,kursService,kursView);
-        AppController appController = new AppController(kursController,studentController,appView);
+
+        KursController kursControllerXML = new KursControllerImpl(kursServiceXML,kursView,zapisanyServiceXML,studentServiceXML,studentView);
+        StudentController studentControllerXML = new StudentControllerImpl(studentServiceXML,studentView,zapisanyServiceXML,kursServiceXML,kursView);
+
+
+        //AppController appController = new AppController(kursController,studentController,appView);
+        AppController appController= new AppController(kursController,studentController,appView,kursControllerXML,studentControllerXML);
 
         appController.Application();
 

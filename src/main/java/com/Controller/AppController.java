@@ -1,5 +1,8 @@
 package com.Controller;
 
+import com.Service.KursService;
+import com.Service.StudentService;
+import com.Service.ZapisanyService;
 import com.View.AppView;
 
 import java.util.Scanner;
@@ -16,11 +19,36 @@ public class AppController {
     int helper;
 
 
+    private KursController kursControllerDB;
+    private KursController kursControllerXML;
+
+    private StudentController studentControllerDB;
+    private  StudentController studentControllerXML;
+
+
+    //XML OR DB
+
+
+
     public AppController(KursController kursController, StudentController studentController, AppView appView) {
         this.kursController = kursController;
         this.studentController = studentController;
         this.appView=appView;
     }
+
+    public AppController(KursController kursController, StudentController studentController, AppView appView, KursController kursControllerXML, StudentController studentControllerXML) {
+
+        this(kursController,studentController,appView);
+
+        this.kursControllerDB = kursController;
+        this.studentControllerDB = studentController;
+
+        this.kursControllerXML=kursControllerXML;
+        this.studentControllerXML=studentControllerXML;
+    }
+
+
+
 
 
 
@@ -46,6 +74,8 @@ public class AppController {
 
             case 0:
                 appView.showAllFunctionalities();
+                System.out.println("44 zmienam na db");
+                System.out.println("55 zmienam na xml");
                 break;
 
             case 1:
@@ -141,6 +171,16 @@ public class AppController {
                 kursController.removeCourse(kursId);
                 break;
 
+            case 44:
+                System.out.println("44 ZMIENIAM NA DB");
+                kursController=kursControllerDB;
+                studentController=studentControllerDB;
+                break;
+            case 55:
+                System.out.println("55 ZMIENIAM NA XML");
+                kursController=kursControllerXML;
+                studentController=studentControllerXML;
+                break;
             default:
                 helper=100;
 

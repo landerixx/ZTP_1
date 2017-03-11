@@ -46,6 +46,17 @@ public class StudentControllerImpl implements StudentController {
         this.kursView=kursView;
     }
 
+    public void setStudentService(StudentService studentService) {
+        this.studentService = studentService;
+    }
+
+    public void setZapisanyService(ZapisanyService zapisanyService) {
+        this.zapisanyService = zapisanyService;
+    }
+
+    public void setKursService(KursService kursService) {
+        this.kursService = kursService;
+    }
 
     public int promptForStudentIndex(){
 

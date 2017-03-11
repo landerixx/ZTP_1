@@ -49,6 +49,17 @@ public class KursControllerImpl implements KursController {
 
     }
 
+    public void setKursService(KursService kursService) {
+        this.kursService = kursService;
+    }
+
+    public void setZapisanyService(ZapisanyService zapisanyService) {
+        this.zapisanyService = zapisanyService;
+    }
+
+    public void setStudentService(StudentService studentService) {
+        this.studentService = studentService;
+    }
 
     public int promptForKursIndex(){
 
