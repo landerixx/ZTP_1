@@ -74,8 +74,6 @@ public class AppController {
 
             case 0:
                 appView.showAllFunctionalities();
-                System.out.println("44 zmienam na db");
-                System.out.println("55 zmienam na xml");
                 break;
 
             case 1:
@@ -151,14 +149,14 @@ public class AppController {
                 kursController.cancelStudent(kursId,studentId);
                 break;
             case 14:
-                appView.showRemoveAllStudentsFromCourse();
-                kursId=kursController.promptForKursIndex();
-                kursController.cancelAllStudents(kursId);
-                break;
-            case 15:
                 appView.showRemoveAllCoursesFromStudent();
                 studentId=studentController.promptForStudentIndex();
                 studentController.removeFromAllCourses(studentId);
+                break;
+            case 15:
+                appView.showRemoveAllStudentsFromCourse();
+                kursId=kursController.promptForKursIndex();
+                kursController.cancelAllStudents(kursId);
                 break;
             case 16:
                 appView.showRemoveStudent();
@@ -172,12 +170,12 @@ public class AppController {
                 break;
 
             case 44:
-                System.out.println("44 ZMIENIAM NA DB");
+                appView.showDbOption();
                 kursController=kursControllerDB;
                 studentController=studentControllerDB;
                 break;
             case 55:
-                System.out.println("55 ZMIENIAM NA XML");
+                appView.showXMLOption();
                 kursController=kursControllerXML;
                 studentController=studentControllerXML;
                 break;

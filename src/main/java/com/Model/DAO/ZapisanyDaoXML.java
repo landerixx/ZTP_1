@@ -41,6 +41,18 @@ public class ZapisanyDaoXML implements ZapisanyDao {
     StreamResult result;
 
 
+    public ZapisanyDaoXML(){
+
+        transformerXML = new TransformerXML();
+        File file = new File(filePathString);
+        if (!(file.exists() && !file.isDirectory())) {
+            transformerXML.makeFile(filePathString, "zapisani");
+        }
+
+    }
+
+
+
     public List<Zapisany> getAllZapisany() {
 
         List<Zapisany> zapisani = new ArrayList<Zapisany>();
@@ -82,12 +94,7 @@ public class ZapisanyDaoXML implements ZapisanyDao {
     public void addZapisany(Zapisany zapisany) {
 
 
-        transformerXML = new TransformerXML();
         File file = new File(filePathString);
-        if (!(file.exists() && !file.isDirectory())) {
-            transformerXML.makeFile(filePathString, "zapisani");
-        }
-
 
         docFactory = DocumentBuilderFactory.newInstance();
 
@@ -157,8 +164,6 @@ public class ZapisanyDaoXML implements ZapisanyDao {
 
                    zapisanyObj=new Zapisany(kursIndx,studIndx);
                 }
-
-
             }
 
         } catch (SAXException e) {
@@ -176,7 +181,6 @@ public class ZapisanyDaoXML implements ZapisanyDao {
     public void updateZapisany(Zapisany zapisany) {
 
     }
-
 
     public void deleteZapisany(int kursId, int studentId) {
 
@@ -203,7 +207,6 @@ public class ZapisanyDaoXML implements ZapisanyDao {
                     zapisany.getParentNode().removeChild(zapisany);
                 }
 
-
             }
 
             //DELETE EMPTY LINES AFTER DELETE
@@ -214,7 +217,6 @@ public class ZapisanyDaoXML implements ZapisanyDao {
                 Node node = nl.item(i);
                 node.getParentNode().removeChild(node);
             }
-
 
             // write the content into xml file
             transformer = TransformerXML.preparedTransformerInstance();
@@ -260,21 +262,12 @@ public class ZapisanyDaoXML implements ZapisanyDao {
         File fXmlFile = new File(filePathString);
         docFactory = DocumentBuilderFactory.newInstance();
 
-
-
         try {
             docBuilder = docFactory.newDocumentBuilder();
             Document doc = docBuilder.parse(fXmlFile);
-
             docFactory.setValidating(true);
             docFactory.setIgnoringElementContentWhitespace(true);
-
-
-
             NodeList nodes = doc.getElementsByTagName("zapisany");
-
-
-
 
             for (int i = 0; i < nodes.getLength(); i++) {
                 Node zapisany =nodes.item(i);
@@ -295,15 +288,10 @@ public class ZapisanyDaoXML implements ZapisanyDao {
                     if(ID==kursIndx) {
                         parent.removeChild(zapisanyEl);
                         i--;
-
-
                     }
                 }
 
-
             }//  for (int i = 0; i < nodes.getLength(); i++)
-
-
 
             //DELETE EMPTY LINES AFTER DELETE
             XPath xp = XPathFactory.newInstance().newXPath();
@@ -313,7 +301,6 @@ public class ZapisanyDaoXML implements ZapisanyDao {
                 Node node = nl.item(i);
                 node.getParentNode().removeChild(node);
             }
-
             // write the content into xml file
             transformer = TransformerXML.preparedTransformerInstance();
             source = new DOMSource(doc);
@@ -334,7 +321,6 @@ public class ZapisanyDaoXML implements ZapisanyDao {
         } catch (XPathExpressionException e) {
             e.printStackTrace();
         }
-
 
     }// public void deleteAllZapisany(int ID, boolean whichOne)
 }

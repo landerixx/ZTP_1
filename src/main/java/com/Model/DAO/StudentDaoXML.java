@@ -41,6 +41,19 @@ public class StudentDaoXML implements StudentDao{
     StreamResult result;
 
 
+    public StudentDaoXML(){
+
+        transformerXML= new TransformerXML();
+        File file = new File(filePathString);
+        if (!(file.exists() && !file.isDirectory())) {
+            transformerXML.makeFile(filePathString,"students");
+        }
+
+
+
+    }
+
+
     public List<Student> getAllStudents() {
 
         List<Student> studenci = new ArrayList<Student>();
@@ -79,12 +92,7 @@ public class StudentDaoXML implements StudentDao{
 
     public void addStudent(Student student) {
 
-
-        transformerXML= new TransformerXML();
         File file = new File(filePathString);
-        if (!(file.exists() && !file.isDirectory())) {
-            transformerXML.makeFile(filePathString,"students");
-        }
 
 
         docFactory = DocumentBuilderFactory.newInstance();

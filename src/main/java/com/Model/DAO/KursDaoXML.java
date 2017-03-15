@@ -34,6 +34,14 @@ public class KursDaoXML implements KursDao {
     TransformerXML transformerXML;
 
 
+    public KursDaoXML(){
+
+        transformerXML= new TransformerXML();
+        File file = new File(filePathString);
+        if (!(file.exists() && !file.isDirectory())) {
+            transformerXML.makeFile(filePathString,"courses");
+        }
+    }
 
 
 
@@ -76,13 +84,8 @@ public class KursDaoXML implements KursDao {
 
     public void addKurs(Kurs kurs) {
 
-        transformerXML= new TransformerXML();
+
         File file = new File(filePathString);
-        if (!(file.exists() && !file.isDirectory())) {
-            transformerXML.makeFile(filePathString,"courses");
-        }
-
-
         docFactory = DocumentBuilderFactory.newInstance();
 
         try {
@@ -163,7 +166,6 @@ public class KursDaoXML implements KursDao {
             e.printStackTrace();
         }
 
-
         return null;
     }//public Kurs getKurs(int KursId)
 
@@ -179,7 +181,7 @@ public class KursDaoXML implements KursDao {
 
 
             NodeList nodes = doc.getElementsByTagName("kurs");
-            System.out.println(nodes.getLength());
+           // System.out.println(nodes.getLength());
             for (int i = 0; i < nodes.getLength(); i++) {
 
                 Node kursNode = nodes.item(i);
@@ -188,7 +190,7 @@ public class KursDaoXML implements KursDao {
 
 
                 NodeList list = kursNode.getChildNodes();
-                System.out.println(list.getLength());
+              //  System.out.println(list.getLength());
 
                 if (kursId == kurs.getKursId()) {
 
@@ -200,11 +202,8 @@ public class KursDaoXML implements KursDao {
                         if ("kursName".equals(nodek.getNodeName())) {
                             nodek.setTextContent(kurs.getKursName());
                             break;
-
                         }
-
                     }
-
                 }
             }//  for (int i = 0; i < nodes.getLength(); i++)
 
@@ -255,7 +254,6 @@ public class KursDaoXML implements KursDao {
 
             }
 
-
             //DELETE EMPTY LINES AFTER DELETE
             XPath xp = XPathFactory.newInstance().newXPath();
             NodeList nl = (NodeList) xp.evaluate("//text()[normalize-space(.)='']", doc, XPathConstants.NODESET);
@@ -264,7 +262,6 @@ public class KursDaoXML implements KursDao {
                 Node node = nl.item(i);
                 node.getParentNode().removeChild(node);
             }
-
 
             // write the content into xml file
             transformer = TransformerXML.preparedTransformerInstance();
