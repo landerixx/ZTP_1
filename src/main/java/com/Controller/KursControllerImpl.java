@@ -6,6 +6,9 @@ import com.Model.Entity.Zapisany;
 import com.Service.KursService;
 import com.Service.StudentService;
 import com.Service.ZapisanyService;
+import com.Specification.AndSpecification;
+import com.Specification.ExpressionSpecification;
+import com.Specification.ISpecification;
 import com.View.KursView;
 import com.View.StudentView;
 
@@ -27,24 +30,26 @@ public class KursControllerImpl implements KursController {
     private StudentView studentView;
     Scanner scanner;
 
-    public KursControllerImpl(){};
+    public KursControllerImpl() {
+    }
 
-    public KursControllerImpl(KursService kursService, KursView kursView){
+    ;
 
-        this.kursService=kursService;
-        this.kursView=kursView;
-           }
+    public KursControllerImpl(KursService kursService, KursView kursView) {
+
+        this.kursService = kursService;
+        this.kursView = kursView;
+    }
 
     public KursControllerImpl(KursService kursService, KursView kursView, ZapisanyService zapisanyService,
-    StudentService studentService, StudentView studentView){
+                              StudentService studentService, StudentView studentView) {
 
 
-        this.kursService=kursService;
-        this.kursView=kursView;
-        this.zapisanyService=zapisanyService;
-        this.studentService=studentService;
-        this.studentView=studentView;
-
+        this.kursService = kursService;
+        this.kursView = kursView;
+        this.zapisanyService = zapisanyService;
+        this.studentService = studentService;
+        this.studentView = studentView;
 
 
     }
@@ -61,64 +66,73 @@ public class KursControllerImpl implements KursController {
         this.studentService = studentService;
     }
 
-    public int promptForKursIndex(){
+    public int promptForKursIndex() {
 
-        scanner= new Scanner(System.in);
+        scanner = new Scanner(System.in);
         int kursIndex;
-       kursView.showPromptMessageForKursIndex();
-        kursIndex=scanner.nextInt();
-      //  scanner.close();
+        kursView.showPromptMessageForKursIndex();
+        kursIndex = scanner.nextInt();
+        //  scanner.close();
         return kursIndex;
 
     }
 
-    public String promptForKursName(){
+    public String promptForKursName() {
 
-        scanner= new Scanner(System.in);
+        scanner = new Scanner(System.in);
         String kursName;
-       kursView.showPromptMessageForKursName();
+        kursView.showPromptMessageForKursName();
         kursName = scanner.next();
-     //   scanner.close();
+        //   scanner.close();
         return kursName;
     }
 
 
+    public boolean createKurs(int kursId, String name) {
+
+        boolean result = false;
+
+        Kurs kurs = new Kurs(kursId, name);
+
+        boolean validation = false;
+        ISpecification kursNameNotNullExpression = new ExpressionSpecification<Kurs>(k -> k.getKursName() != null);
+        ISpecification kursNotEmptyNameExpression = new ExpressionSpecification<Kurs>(k -> k.getKursName().equals(""));
 
 
+        validation =kursNameNotNullExpression.and(kursNameNotNullExpression).isSatisfiedBy(kurs);
+        if(validation)
+            result = kursService.add(kurs);
+        else
+            kursView.validationTestKursName(name);
 
-   public  boolean createKurs(int kursId, String name){
 
-        boolean result=false;
-
-        result = kursService.add(new Kurs(kursId,name));
-
-        if(result)
-            kursView.addedKurs(kursId,name);
+        if (result)
+            kursView.addedKurs(kursId, name);
 
         return result;
     }// public  boolean createKurs(int kursId, String name)
 
 
-    public void displayCourses(){
+    public void displayCourses() {
 
 
-        List<Kurs> courseList=kursService.getAll();
-        HashMap<Integer,String> map= new HashMap<Integer, String>();
-        for(Kurs kurs: courseList)
-            map.put(kurs.getKursId(),kurs.getKursName());
+        List<Kurs> courseList = kursService.getAll();
+        HashMap<Integer, String> map = new HashMap<Integer, String>();
+        for (Kurs kurs : courseList)
+            map.put(kurs.getKursId(), kurs.getKursName());
 
         kursView.showAllCourses(map);
 
     }//  public void displayCourses()
 
-    public boolean displayCourse(int kursId){
+    public boolean displayCourse(int kursId) {
 
-        boolean result=false;
+        boolean result = false;
 
         Kurs kurs = kursService.get(kursId);
-        if(kurs!=null){
-            result=true;
-            kursView.showCourse(kursId,kurs.getKursName());
+        if (kurs != null) {
+            result = true;
+            kursView.showCourse(kursId, kurs.getKursName());
 
         }
 
@@ -127,21 +141,30 @@ public class KursControllerImpl implements KursController {
     }// public void showCourse(int kursId, String name)
 
 
+    public boolean changeCourseName(int kursId, String newName) {
 
+        boolean result = false;
+        result = kursService.update(new Kurs(kursId, newName));
 
-    public boolean changeCourseName(int kursId, String newName){
+        Kurs kurs = new Kurs(kursId, newName);
+        boolean validation = false;
+        ISpecification kursNameNotNullExpression = new ExpressionSpecification<Kurs>(k -> k.getKursName() != null);
+        ISpecification kursNotEmptyNameExpression = new ExpressionSpecification<Kurs>(k -> k.getKursName().equals(""));
 
-        boolean result =false;
-        result = kursService.update(new Kurs(kursId,newName));
+        validation =kursNameNotNullExpression.and(kursNameNotNullExpression).isSatisfiedBy(kurs);
 
-        if(result)
-            kursView.showUpdatedCourse(kursId,newName);
+        if(validation)
+            result = kursService.add(kurs);
+        else{
+            kursView.validationTestKursName(newName);
+        }
+
+        if (result)
+            kursView.showUpdatedCourse(kursId, newName);
 
         return result;
 
     }//public boolean changeCourseName(int kursId, String newName)
-
-
 
 
     //======================================================
@@ -149,19 +172,19 @@ public class KursControllerImpl implements KursController {
 
     public boolean displayCourseWithStudents(int kursId) {
 
-        boolean result=displayCourse(kursId); //jezeli false nie ma takiego kursu
+        boolean result = displayCourse(kursId); //jezeli false nie ma takiego kursu
 
         kursView.showCourseWithStudents();
 
-        Set<Integer> studentIDs= zapisanyService.getIds(kursId,false); //false -> wyciagniemy wszystkich studentow zapisanych na ten kurs
+        Set<Integer> studentIDs = zapisanyService.getIds(kursId, false); //false -> wyciagniemy wszystkich studentow zapisanych na ten kurs
         Student stud;
 
-        for(Integer id: studentIDs) {
+        for (Integer id : studentIDs) {
 
             stud = studentService.get(id);
-            studentView.showStudent(id,stud.getStudentName());
+            studentView.showStudent(id, stud.getStudentName());
         }
-        if(studentIDs.isEmpty())
+        if (studentIDs.isEmpty())
             kursView.showMessageNoStudents();
 
         return result;
@@ -169,23 +192,21 @@ public class KursControllerImpl implements KursController {
     }//  public boolean displayCourseWithStudents(int kursId)
 
 
-
-
     //=================================================
 
     public boolean cancelStudent(int kursId, int studentId) {
 
 
-        boolean result=false;
+        boolean result = false;
 
         Student stud = studentService.get(studentId);
         Kurs kurs = kursService.get(kursId);
 
 
-        result=zapisanyService.remove(new Zapisany(kursId,studentId));
+        result = zapisanyService.remove(new Zapisany(kursId, studentId));
 
-        if(result)
-           kursView.cancelStudentMessage(studentId, stud.getStudentName(),kursId, kurs.getKursName());
+        if (result)
+            kursView.cancelStudentMessage(studentId, stud.getStudentName(), kursId, kurs.getKursName());
 
 
         return result;
@@ -197,18 +218,17 @@ public class KursControllerImpl implements KursController {
         boolean result = false;
 
         Kurs kurs = kursService.get(kursId);
-        boolean isKurs = kurs !=null;
+        boolean isKurs = kurs != null;
 
         Set<Integer> studentsIds;
-        if(isKurs) {
+        if (isKurs) {
             studentsIds = zapisanyService.getIds(kursId, false); //false -> wyciagniemy wszystkich studentow tego kursu
-            for(Integer studentId: studentsIds)
-                zapisanyService.remove(new Zapisany(kursId,studentId));
+            for (Integer studentId : studentsIds)
+                zapisanyService.remove(new Zapisany(kursId, studentId));
 
             result = true;
-            kursView.removeFromAllCoursesMessage(kursId,kurs.getKursName());
+            kursView.removeFromAllCoursesMessage(kursId, kurs.getKursName());
         }
-
 
 
         return result;
@@ -220,25 +240,20 @@ public class KursControllerImpl implements KursController {
         boolean result = false;
 
         Kurs kurs = kursService.get(kursId);
-        boolean isKurs = kurs !=null;
+        boolean isKurs = kurs != null;
 
 
         Set<Integer> studentsIds;
-        if(isKurs) {
+        if (isKurs) {
             studentsIds = zapisanyService.getIds(kursId, false); //false -> wyciagniemy wszystkich studentow tego kursu
 
 
-            //jaka strategia -> usuwamy zapisy ze srtudentami, czy powiadamiamy uzytkownika, ze sa zapisani studenci na kurs
-            //narazie tylko powiadamiam
-
-
-            if(studentsIds.isEmpty()) {
+            if (studentsIds.isEmpty()) {
                 kursService.remove(kurs);
-               kursView.removeCoursePositiveMessage(kursId, kurs.getKursName());
-                result=true;
+                kursView.removeCoursePositiveMessage(kursId, kurs.getKursName());
+                result = true;
 
-            }
-            else
+            } else
                 kursView.removeCourseNegativeMessage(kursId, kurs.getKursName());
         }
 

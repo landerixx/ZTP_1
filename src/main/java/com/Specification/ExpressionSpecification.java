@@ -10,7 +10,7 @@ public class ExpressionSpecification<T> extends CompositeSpecification<T> {
 
     Predicate<T> expression;
 
-    ExpressionSpecification(Predicate<T> expression){
+    public ExpressionSpecification(Predicate<T> expression){
 
         this.expression=expression;
     }

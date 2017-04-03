@@ -6,6 +6,8 @@ import com.Model.Entity.Zapisany;
 import com.Service.KursService;
 import com.Service.StudentService;
 import com.Service.ZapisanyService;
+import com.Specification.ExpressionSpecification;
+import com.Specification.ISpecification;
 import com.View.KursView;
 import com.View.StudentView;
 
@@ -91,11 +93,26 @@ public class StudentControllerImpl implements StudentController {
 
     public boolean createStudent(int studentId, String name){
 
-        boolean result;
-        result = studentService.add(new Student(studentId,name));
+        boolean result=false;
 
-        if(result)
-           studentView.addedStudent(studentId,name);
+       Student stud = new Student(studentId,name);
+
+        boolean validation = false;
+        ISpecification studentNameNotNullExpression = new ExpressionSpecification<Student>(k -> k.getStudentName() != null);
+        ISpecification studentNameHasNumberExpression = new ExpressionSpecification<Student>
+                (k -> k.getStudentName().matches("[0-9]+"));
+
+
+        validation = studentNameHasNumberExpression.not().and(studentNameNotNullExpression).isSatisfiedBy(stud);
+        if(validation)
+            result = studentService.add(stud);
+           else{
+            studentView.validationTestName(name);
+        }
+
+
+        if (result)
+            kursView.addedKurs(studentId, name);
 
         return result;
     }//public boolean createStudent(int studentId, String name)
@@ -130,8 +147,19 @@ public class StudentControllerImpl implements StudentController {
 
     public boolean changeStudentName(int studentId, String newName) {
 
-        boolean result;
-        result = studentService.update(new Student(studentId,newName));
+        boolean result=false;
+
+        Student stud = new Student(studentId, newName);
+        boolean validation = false;
+        ISpecification studentNameNotNullExpression = new ExpressionSpecification<Student>(k -> k.getStudentName() != null);
+        ISpecification studentNameHasNumberExpression = new ExpressionSpecification<Student>
+                (k -> k.getStudentName().matches("[0-9]+"));
+
+        if(validation)
+            result = studentService.update(stud);
+        else{
+            studentView.validationTestName(newName);
+        }
 
         if(result)
             studentView.showUpdatedStudent(studentId,newName);
@@ -246,8 +274,6 @@ public class StudentControllerImpl implements StudentController {
 
             coursesIds = zapisanyService.getIds(studentId, true); //true -> wyciagniemy wszystkie kursy tego studenta
 
-            //jaka strategia -> usuwamy zapisy na kursy, czy powiadamiamy uzytkownika, ze jest zapisany na kurs
-            //narazie tylko powiadamiam
 
 
             if(coursesIds.isEmpty()) {

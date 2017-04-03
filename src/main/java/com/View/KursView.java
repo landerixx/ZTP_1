@@ -89,4 +89,9 @@ public class KursView {
     public void showPromptMessageForKursName() {
         System.out.println("Podaj nazwe kursu");
     }
+
+    public void validationTestKursName(String name) {
+        if(name!=null)
+            System.out.println("Nazwa kursu nie spelnia kryteriow, nie moze byc pustym znakiem");
+    }
 }//public class KursView

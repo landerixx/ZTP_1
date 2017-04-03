@@ -95,4 +95,9 @@ public class StudentView {
     public void showPromptMessageForStudentName() {
         System.out.println("Podaj nazwe studenta");
     }
+
+    public void validationTestName(String name) {
+        if(name!=null)
+            System.out.println( "Nazwa nie spelnia kryteriow, posiada cyfry");
+    }
 }

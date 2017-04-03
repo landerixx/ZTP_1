@@ -22,6 +22,12 @@ A "service layer" exists between the UI and the backend
 
         https://www.tutorialspoint.com/design_pattern/mvc_pattern.htm
 
+
+
+// w serwisie null pointer exception, ze wzgledu na brak pliku
+
+
+STARAJMY SIE WALIDOWAC JAK NAJWCZESNIEJ!!
 */
 
 
